@@ -270,8 +270,18 @@ import ColorBends from '../components/ColorBends';
 
 export default function Landing() {
   return (
-    <div className="relative w-full min-h-screen">
-      <div className="fixed inset-0 z-0">
+    <div className="relative w-full min-h-screen bg-black">
+      {/* ColorBends background - using inline style to ensure dimensions */}
+      <div 
+        style={{ 
+          position: 'fixed', 
+          top: 0, 
+          left: 0, 
+          width: '100vw', 
+          height: '100vh', 
+          zIndex: 0 
+        }}
+      >
         <ColorBends
           colors={["#ff1744", "#651fff", "#00e5ff", "#76ff03"]}
           rotation={30}
@@ -283,9 +293,12 @@ export default function Landing() {
           parallax={0.8}
           noise={0.05}
           transparent={false}
+          className=""
+          style={{ width: '100%', height: '100%' }}
         />
       </div>
 
+      {/* Content overlay */}
       <div className="relative z-10">
         <div className="container mx-auto px-4 py-20">
           <h1 className="text-6xl font-bold text-white text-center mb-6">
