@@ -1,104 +1,3 @@
-// // src/pages/Landing.jsx
-// import React from "react";
-// import FaultyTerminal from "../components/FaultyTerminal"; // adjust if needed
-
-// export default function Landing() {
-//   return (
-//     <div
-//       className="w-screen h-screen overflow-hidden relative bg-black text-white"
-//       style={{ margin: 0, padding: 0 }}
-//     >
-//       {/* === FULLSCREEN TERMINAL BACKGROUND === */}
-//       <div
-//         style={{
-//           position: "absolute",
-//           inset: 0,
-//           width: "100%",
-//           height: "100%",
-//           overflow: "hidden",
-//           zIndex: 1
-//         }}
-//       >
-//         <FaultyTerminal
-//           scale={1.5}
-//           gridMul={[2, 1]}
-//           digitSize={1.2}
-//           timeScale={1}
-//           pause={false}
-//           scanlineIntensity={1}
-//           glitchAmount={1}
-//           flickerAmount={1}
-//           noiseAmp={1}
-//           chromaticAberration={0}
-//           dither={0}
-//           curvature={0.15}
-//           tint="#bb1b68"
-//           mouseReact={true}
-//           mouseStrength={0.5}
-//           pageLoadAnimation={false}
-//           brightness={1}
-//         />
-//       </div>
-
-//       {/* === OVERLAY CONTENT (centered) === */}
-//       <div
-//         style={{
-//           position: "relative",
-//           zIndex: 10,
-//           width: "100%",
-//           height: "100%",
-//           display: "flex",
-//           flexDirection: "column",
-//           alignItems: "center",
-//           justifyContent: "center",
-//           textAlign: "center",
-//           padding: "0 20px"
-//         }}
-//       >
-//         <h1
-//           style={{
-//             fontSize: "5rem",
-//             fontWeight: 800,
-//             marginBottom: "20px",
-//             textShadow: "0 0 40px rgba(255,255,255,0.3)"
-//           }}
-//         >
-//           HIVEMIND
-//         </h1>
-
-//         <p
-//           style={{
-//             fontSize: "1.3rem",
-//             maxWidth: "800px",
-//             lineHeight: 1.5,
-//             marginBottom: "40px",
-//             color: "rgba(255,255,255,0.85)"
-//           }}
-//         >
-//           A distributed cyber-mesh intelligence — powered by glitch-reactive computation.
-//         </p>
-
-//         <button
-//           style={{
-//             padding: "14px 32px",
-//             borderRadius: "12px",
-//             fontSize: "1.2rem",
-//             fontWeight: 600,
-//             background: "rgba(255,255,255,0.12)",
-//             border: "1px solid rgba(255,255,255,0.2)",
-//             color: "#fff",
-//             backdropFilter: "blur(8px)",
-//             cursor: "pointer"
-//           }}
-//         >
-//           Get Started
-//         </button>
-//       </div>
-//     </div>
-//   );
-// }
-
-
 // src/pages/Landing.jsx
 import React from "react";
 import { useNavigate } from "react-router-dom";
@@ -245,7 +144,7 @@ export default function Landing() {
           <div style={{ display: "flex", gap: 16, justifyContent: "center" }}>
             <button
               className="cta-white"
-              onClick={() => navigate("/dashboard")}
+              onClick={() => navigate("/map")}
               aria-label="Go to dashboard"
             >
               Get Started
