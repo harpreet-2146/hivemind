@@ -2,11 +2,9 @@
 
 > **Knowledge Constellation Platform** - Transform any topic into a visual learning journey
 
-[![MIT License](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Node.js](https://img.shields.io/badge/Node.js-18+-green.svg)](https://nodejs.org/)
 [![React](https://img.shields.io/badge/React-18+-blue.svg)](https://reactjs.org/)
 
-![Hivemind Banner](https://via.placeholder.com/1200x400/0a0a0a/eab308?text=🐝+HIVEMIND+-+Knowledge+Constellation+Platform)
 
 ## 🎯 The Problem
 
