@@ -10,62 +10,237 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Health check
+let lastSearchResults = [];
+let lastSearchQuery = '';
+
+// Category mappings for strict filtering
+const CATEGORY_KEYWORDS = {
+  'quantum-physics': [
+    'quantum', 'quantum mechanics', 'schrodinger', 'heisenberg', 'superposition',
+    'entanglement', 'wavefunction', 'qubit', 'quantization', 'spin'
+  ],
+  'relativity': [
+    'relativity', 'einstein', 'spacetime', 'general relativity', 'special relativity',
+    'time dilation', 'gravity curvature'
+  ],
+  'thermodynamics': [
+    'thermodynamics', 'entropy', 'enthalpy', 'heat transfer', 'temperature', 'laws of thermodynamics'
+  ],
+  'electromagnetism': [
+    'electromagnetism', 'electric field', 'magnetic field', 'maxwell equations',
+    'electrodynamics', 'charge', 'current'
+  ],
+  'particle-physics': [
+    'particle physics', 'boson', 'fermion', 'quark', 'lepton', 'hadron', 'standard model'
+  ],
+  'nuclear-physics': [
+    'nuclear physics', 'radioactivity', 'nuclear fission', 'nuclear fusion', 'isotope'
+  ],
+  'classical-mechanics': [
+    'mechanics', 'newton laws', 'forces', 'motion', 'kinematics', 'dynamics'
+  ],
+  'astrophysics': [
+    'astrophysics', 'stars', 'galaxies', 'cosmic', 'supernova', 'neutron star', 'space-time'
+  ],
+  'ai-deep-learning': [
+    'deep learning', 'neural network', 'cnn', 'rnn', 'transformer', 'backpropagation'
+  ],
+  'ai-ml-basics': [
+    'machine learning', 'supervised', 'unsupervised', 'reinforcement learning', 'model training'
+  ],
+  'nlp': [
+    'nlp', 'language model', 'text processing', 'tokenization', 'embedding'
+  ],
+  'computer-vision': [
+    'computer vision', 'image recognition', 'object detection', 'opencv'
+  ],
+  'reinforcement-learning': [
+    'reinforcement learning', 'rl agent', 'reward function', 'q learning'
+  ],
+  'algorithms': [
+    'algorithm', 'sorting', 'searching', 'complexity', 'big o'
+  ],
+  'data-structures': [
+    'data structure', 'tree', 'graph', 'linked list', 'stack', 'queue'
+  ],
+  'databases': [
+    'database', 'sql', 'nosql', 'mongodb', 'queries', 'schema'
+  ],
+  'operating-systems': [
+    'operating system', 'process', 'thread', 'scheduling', 'memory management'
+  ],
+  'computer-networks': [
+    'network', 'protocol', 'ip', 'tcp', 'router', 'http'
+  ],
+  'web-development': [
+    'web development', 'frontend', 'backend', 'javascript', 'react', 'node', 'api'
+  ],
+  'calculus': [
+    'calculus', 'derivative', 'integral', 'limits', 'rate of change'
+  ],
+  'linear-algebra': [
+    'linear algebra', 'matrix', 'vector', 'eigenvalue', 'eigenvector'
+  ],
+  'probability-stats': [
+    'probability', 'statistics', 'bayes', 'distribution', 'mean', 'variance'
+  ],
+  'number-theory': [
+    'number theory', 'primes', 'modular arithmetic', 'gcd'
+  ],
+  'geometry': [
+    'geometry', 'shapes', 'angles', 'triangles', 'polygons'
+  ],
+  'cell-biology': [
+    'cell', 'organelles', 'mitochondria', 'cell membrane'
+  ],
+  'genetics': [
+    'genetics', 'gene', 'dna', 'rna', 'mutation', 'heredity'
+  ],
+  'evolution': [
+    'evolution', 'darwin', 'natural selection', 'adaptation', 'species'
+  ],
+  'microbiology': [
+    'microbiology', 'virus', 'bacteria', 'pathogen'
+  ],
+  'organic-chemistry': [
+    'organic chemistry', 'hydrocarbon', 'alkane', 'alkene', 'functional group'
+  ],
+  'inorganic-chemistry': [
+    'inorganic chemistry', 'metal', 'ionic bond', 'coordination compound'
+  ],
+  'chemical-reactions': [
+    'chemical reaction', 'oxidation', 'reduction', 'stoichiometry'
+  ],
+  'periodic-table': [
+    'periodic table', 'elements', 'atomic number', 'groups', 'periods'
+  ],
+  'solar-system': [
+    'solar system', 'sun', 'planet', 'orbit', 'moon', 'asteroid'
+  ],
+  'galaxies': [
+    'galaxy', 'milky way', 'andromeda', 'spiral galaxy'
+  ],
+  'cosmology': [
+    'cosmology', 'big bang', 'dark matter', 'dark energy', 'expansion'
+  ],
+  'space-exploration': [
+    'nasa', 'spacex', 'iss', 'apollo', 'rocket'
+  ],
+  'world-war-1': [
+    'world war i', 'ww1', 'allies', 'central powers', 'trench warfare'
+  ],
+  'world-war-2': [
+    'world war ii', 'ww2', 'axis', 'allies', 'hitler', 'holocaust'
+  ],
+  'roman-empire': [
+    'roman empire', 'rome', 'caesar', 'senate', 'roman army'
+  ],
+  'mughal-empire': [
+    'mughal empire', 'akbar', 'shah jahan', 'taj mahal', 'aurangzeb'
+  ],
+  'industrial-revolution': [
+    'industrial revolution', 'factories', 'steam engine', 'mass production'
+  ],
+  'american-revolution': [
+    'american revolution', 'independence', 'colonies', 'george washington'
+  ]
+};
+
+const getQueryCategory = (query) => {
+  const q = query.toLowerCase();
+  for (const [category, keywords] of Object.entries(CATEGORY_KEYWORDS)) {
+    if (keywords.some(k => q.includes(k))) {
+      return category;
+    }
+  }
+  return null;
+};
+
+const isRelevant = (doc, query, category) => {
+  const q = query.toLowerCase();
+  const title = doc.title?.toLowerCase() || '';
+  const summary = doc.summary?.toLowerCase() || '';
+  const concepts = doc.concepts?.map(c => c.toLowerCase()) || [];
+  const docCategory = doc.category?.toLowerCase() || '';
+  
+  // Check direct query match
+  const queryWords = q.split(/\s+/).filter(w => w.length > 2);
+  const directMatch = queryWords.some(word => 
+    title.includes(word) || 
+    concepts.some(c => c.includes(word)) ||
+    summary.includes(word)
+  );
+  
+  if (directMatch) return true;
+  
+  // Check category match
+  if (category && docCategory === category) return true;
+  
+  // Check if doc belongs to same category based on keywords
+  if (category) {
+    const categoryKeywords = CATEGORY_KEYWORDS[category] || [];
+    const docText = `${title} ${summary} ${concepts.join(' ')}`;
+    if (categoryKeywords.some(k => docText.includes(k))) return true;
+  }
+  
+  return false;
+};
+
 app.get('/health', (req, res) => {
   res.json({ status: 'ok', name: 'Hivemind API' });
 });
 
-// Search endpoint - combines Meilisearch + Qdrant
 app.get('/search', async (req, res) => {
   try {
-    const { q, difficulty } = req.query;
+    const { q } = req.query;
     
     if (!q) {
       return res.status(400).json({ error: 'Query required' });
     }
 
-    // Step 1: Meilisearch lexical search
-    const lexicalResults = await meilisearch.search(q, { difficulty });
+    // Get category for query
+    const category = getQueryCategory(q);
+    
+    // Search with high limit
+    const allResults = await meilisearch.search(q, {});
+    
+    // Filter to only relevant results
+    const relevantResults = allResults.filter(doc => isRelevant(doc, q, category));
+    
+    // Sort by relevance score
+    const queryWords = q.toLowerCase().split(/\s+/).filter(w => w.length > 2);
+    const scoredResults = relevantResults.map(doc => {
+      let score = 0;
+      const title = doc.title?.toLowerCase() || '';
+      const concepts = doc.concepts?.map(c => c.toLowerCase()) || [];
+      
+      queryWords.forEach(word => {
+        if (title.includes(word)) score += 10;
+        if (concepts.some(c => c.includes(word))) score += 5;
+      });
+      
+      // Boost same category
+      if (category && doc.category === category) score += 3;
+      
+      return { ...doc, relevanceScore: score };
+    });
+    
+    // Sort and take top results (minimum 10 if available)
+    const sortedResults = scoredResults
+      .sort((a, b) => b.relevanceScore - a.relevanceScore)
+      .slice(0, 15);
 
-    // Step 2: Qdrant semantic search
-    const queryEmbedding = await gemini.getEmbedding(q);
-    const semanticResults = await qdrant.searchSimilar(queryEmbedding, 10);
+    // Store for chat
+    lastSearchResults = sortedResults;
+    lastSearchQuery = q;
 
-    // Step 3: Merge and dedupe results
-    const seen = new Set();
-    const merged = [];
-
-    // Add lexical results first (higher priority)
-    for (const doc of lexicalResults) {
-      if (!seen.has(doc.id)) {
-        seen.add(doc.id);
-        merged.push({ ...doc, source: 'lexical' });
-      }
-    }
-
-    // Add semantic results
-    for (const doc of semanticResults) {
-      if (!seen.has(doc.docId)) {
-        seen.add(doc.docId);
-        merged.push({
-          id: doc.docId,
-          title: doc.title,
-          concepts: doc.concepts,
-          difficulty: doc.difficulty,
-          score: doc.score,
-          source: 'semantic',
-        });
-      }
-    }
-
-    res.json({ results: merged });
+    res.json({ results: sortedResults });
   } catch (error) {
     console.error('Search error:', error);
     res.status(500).json({ error: error.message });
   }
 });
 
-// Get concept graph
 app.get('/graph', async (req, res) => {
   try {
     const { concept } = req.query;
@@ -84,7 +259,6 @@ app.get('/graph', async (req, res) => {
   }
 });
 
-// Chat endpoint
 app.post('/chat', async (req, res) => {
   try {
     const { message } = req.body;
@@ -93,12 +267,8 @@ app.post('/chat', async (req, res) => {
       return res.status(400).json({ error: 'Message required' });
     }
 
-    // Get relevant context from search
-    const queryEmbedding = await gemini.getEmbedding(message);
-    const context = await qdrant.searchSimilar(queryEmbedding, 3);
-
-    // Generate response
-    const response = await gemini.chat(message, context);
+    const context = lastSearchResults.slice(0, 5);
+    const response = await gemini.chat(message, context, lastSearchQuery);
 
     res.json({ response, context });
   } catch (error) {
@@ -107,7 +277,6 @@ app.post('/chat', async (req, res) => {
   }
 });
 
-// Start server
 const PORT = process.env.PORT || 3000;
 
 const start = async () => {

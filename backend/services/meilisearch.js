@@ -11,10 +11,9 @@ const initIndex = async () => {
   try {
     const index = client.index(INDEX_NAME);
     
-    // Set searchable and filterable attributes
     await index.updateSettings({
       searchableAttributes: ['title', 'summary', 'concepts'],
-      filterableAttributes: ['difficulty', 'source', 'concepts'],
+      filterableAttributes: ['difficulty', 'source', 'concepts', 'category'],
       sortableAttributes: ['title'],
     });
     
@@ -37,11 +36,15 @@ const search = async (query, filters = {}) => {
   
   const searchParams = {
     limit: 20,
-    attributesToRetrieve: ['id', 'title', 'url', 'summary', 'concepts', 'difficulty', 'source'],
+    attributesToRetrieve: ['id', 'title', 'url', 'summary', 'concepts', 'difficulty', 'category', 'source'],
   };
   
   if (filters.difficulty) {
     searchParams.filter = `difficulty = "${filters.difficulty}"`;
+  }
+  
+  if (filters.category) {
+    searchParams.filter = `category = "${filters.category}"`;
   }
   
   const results = await index.search(query, searchParams);
