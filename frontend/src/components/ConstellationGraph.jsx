@@ -165,7 +165,7 @@ function ConstellationGraph({ data, onNodeClick, selectedId }) {
           mouseInteraction={false}
           density={0.9}
           glowIntensity={0.25}
-          saturation={0.7}
+          saturation={0.4}
           hueShift={220}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/42 via-transparent to-black/30 pointer-events-none" />

@@ -6,314 +6,429 @@ const memgraph = require('./services/memgraph');
 const gemini = require('./services/gemini');
 
 const TOPICS_BY_CATEGORY = {
+  // --- EXPANDED ADVANCED PHYSICS ---
   'quantum-physics': [
     'Quantum mechanics',
-    'Quantum computing',
-    'Quantum entanglement',
-    'Wave–particle duality',
+    'Wave function',
     'Schrödinger equation',
     'Heisenberg uncertainty principle',
+    'Quantum entanglement',
     'Quantum tunneling',
+    'Quantum superposition',
     'Quantum decoherence',
     'Quantum teleportation',
+    'Qubits and quantum states',
+    'Pauli exclusion principle',
     'Quantum field theory'
   ],
+
   'relativity': [
+    'Einstein relativity',
     'General relativity',
     'Special relativity',
-    'Spacetime',
+    'Spacetime curvature',
     'Time dilation',
+    'Mass–energy equivalence',
+    'Lorentz transformations',
     'Gravitational waves',
-    'Black hole'
-  ],
-  'thermodynamics': [
-    'Laws of thermodynamics',
-    'Entropy',
-    'Enthalpy',
-    'Heat transfer',
-    'Thermal equilibrium'
-  ],
-  'electromagnetism': [
-    'Maxwell\'s equations',
-    'Electric field',
-    'Magnetic field',
-    'Electromagnetic radiation'
-  ],
-  'particle-physics': [
-    'Standard Model',
-    'Boson',
-    'Fermion',
-    'Quark',
-    'Lepton',
-    'Higgs boson'
-  ],
-  'nuclear-physics': [
-    'Radioactivity',
-    'Nuclear fission',
-    'Nuclear fusion',
-    'Isotopes'
-  ],
-  'classical-mechanics': [
-    'Newton\'s laws',
-    'Kinematics',
-    'Dynamics',
-    'Energy conservation'
-  ],
-  'astrophysics': [
-    'Supernova',
-    'Neutron star',
-    'Pulsar',
-    'Exoplanet'
-  ],
-  'ai-deep-learning': [
-    'Neural network',
-    'Convolutional neural network',
-    'Recurrent neural network',
-    'Transformer (machine learning model)'
-  ],
-  'ai-ml-basics': [
-    'Machine learning',
-    'Supervised learning',
-    'Unsupervised learning',
-    'Reinforcement learning'
-  ],
-  'nlp': [
-    'Natural language processing',
-    'Tokenization',
-    'Large language model',
-    'Word embeddings'
-  ],
-  'computer-vision': [
-    'Image classification',
-    'Object detection',
-    'OpenCV',
-    'Image segmentation'
-  ],
-  'reinforcement-learning': [
-    'Q-learning',
-    'Policy gradient',
-    'Reward function',
-    'Markov decision process'
-  ],
-  'algorithms': [
-    'Sorting algorithm',
-    'Searching algorithm',
-    'Graph algorithm',
-    'Dynamic programming'
-  ],
-  'data-structures': [
-    'Tree (data structure)',
-    'Graph (data structure)',
-    'Linked list',
-    'Stack',
-    'Queue'
-  ],
-  'databases': [
-    'SQL',
-    'NoSQL',
-    'MongoDB',
-    'Database schema'
-  ],
-  'operating-systems': [
-    'Process management',
-    'Threads',
-    'Scheduling algorithms',
-    'Memory management'
-  ],
-  'computer-networks': [
-    'TCP/IP',
-    'HTTP',
-    'Routing',
-    'Packet switching'
-  ],
-  'web-development': [
-    'Frontend and backend',
-    'JavaScript',
-    'React (web framework)',
-    'Node.js'
-  ],
-  'calculus': [
-    'Differentiation',
-    'Integration',
-    'Limits',
-    'Multivariable calculus'
-  ],
-  'linear-algebra': [
-    'Matrix',
-    'Vector space',
-    'Eigenvalue',
-    'Eigenvector'
-  ],
-  'probability-stats': [
-    'Bayes theorem',
-    'Probability distributions',
-    'Mean and variance',
-    'Hypothesis testing'
-  ],
-  'number-theory': [
-    'Prime number',
-    'Modular arithmetic',
-    'Greatest common divisor'
-  ],
-  'geometry': [
-    'Triangles',
-    'Circles',
-    'Polygons',
-    'Coordinate geometry'
-  ],
-  'cell-biology': [
-    'Cell structure',
-    'Mitochondria',
-    'Nucleus',
-    'Cell membrane'
-  ],
-  'genetics': [
-    'DNA',
-    'RNA',
-    'Gene expression',
-    'Mutation'
-  ],
-  'evolution': [
-    'Natural selection',
-    'Darwin\'s theory',
-    'Speciation',
-    'Adaptation'
-  ],
-  'microbiology': [
-    'Virus',
-    'Bacteria',
-    'Fungi',
-    'Microbial infection'
-  ],
-  'organic-chemistry': [
-    'Hydrocarbon',
-    'Functional group',
-    'Alcohols',
-    'Amines'
-  ],
-  'inorganic-chemistry': [
-    'Metals',
-    'Ionic bond',
-    'Coordination compound'
-  ],
-  'chemical-reactions': [
-    'Oxidation',
-    'Reduction',
-    'Reaction rate',
-    'Stoichiometry'
-  ],
-  'periodic-table': [
-    'Elements',
-    'Atomic number',
-    'Groups',
-    'Periods'
-  ],
-  'solar-system': [
-    'Sun',
-    'Earth',
-    'Mars',
-    'Jupiter',
-    'Moon'
-  ],
-  'galaxies': [
-    'Milky Way',
-    'Andromeda',
-    'Spiral galaxy',
-    'Elliptical galaxy'
-  ],
-  'cosmology': [
-    'Big Bang',
-    'Dark matter',
-    'Dark energy',
-    'Cosmic microwave background'
-  ],
-  'space-exploration': [
-    'NASA',
-    'SpaceX',
-    'International Space Station',
-    'Apollo program'
-  ],
-  'world-war-1': [
-    'World War I',
-    'Allied powers',
-    'Central powers',
-    'Trench warfare'
-  ],
-  'world-war-2': [
-    'World War II',
-    'Axis powers',
-    'Allied forces',
-    'Holocaust'
-  ],
-  'roman-empire': [
-    'Roman Empire',
-    'Julius Caesar',
-    'Roman senate',
-    'Gladiator games'
-  ],
-  'mughal-empire': [
-    'Mughal Empire',
-    'Akbar',
-    'Shah Jahan',
-    'Taj Mahal'
-  ],
-  'industrial-revolution': [
-    'Industrial Revolution',
-    'Steam engine',
-    'Factories',
-    'Urbanization'
-  ],
-  'american-revolution': [
-    'American Revolution',
-    'Declaration of Independence',
-    'George Washington'
+    'Black hole relativity',
+    'Relativistic mechanics'
   ]
+
+  // 'thermodynamics': [
+  //   'Laws of thermodynamics',
+  //   'Entropy',
+  //   'Enthalpy',
+  //   'Free energy',
+  //   'Heat transfer',
+  //   'Thermal equilibrium',
+  //   'Carnot engine'
+  // ],
+
+  // 'electromagnetism': [
+  //   'Maxwell\'s equations',
+  //   'Electric field',
+  //   'Magnetic field',
+  //   'Electromagnetic induction',
+  //   'Electromagnetic radiation',
+  //   'Lorentz force'
+  // ],
+
+  // 'particle-physics': [
+  //   'Standard Model',
+  //   'Boson',
+  //   'Fermion',
+  //   'Quark',
+  //   'Lepton',
+  //   'Higgs boson',
+  //   'Neutrino oscillation'
+  // ],
+
+  // 'nuclear-physics': [
+  //   'Radioactivity',
+  //   'Nuclear fission',
+  //   'Nuclear fusion',
+  //   'Isotopes',
+  //   'Binding energy'
+  // ],
+
+  // 'classical-mechanics': [
+  //   'Newton\'s laws',
+  //   'Kinematics',
+  //   'Dynamics',
+  //   'Momentum',
+  //   'Energy conservation',
+  //   'Rotational motion'
+  // ],
+
+  // 'astrophysics': [
+  //   'Supernova',
+  //   'Neutron star',
+  //   'Pulsar',
+  //   'Exoplanet',
+  //   'Accretion disk',
+  //   'Cosmic rays'
+  // ],
+
+  // // --- AI + ML EXPANDED CATEGORIES ---
+  // 'machine-learning': [
+  //   'Supervised learning',
+  //   'Unsupervised learning',
+  //   'Reinforcement learning',
+  //   'Gradient descent',
+  //   'Loss functions',
+  //   'Decision trees',
+  //   'Support vector machines',
+  //   'Model evaluation metrics',
+  //   'Bias–variance tradeoff',
+  //   'Regularization',
+  //   'Ensemble learning',
+  //   'Overfitting and underfitting'
+  // ],
+
+  // 'deep-learning': [
+  //   'Neural networks',
+  //   'Convolutional neural network',
+  //   'Recurrent neural network',
+  //   'Transformer architecture',
+  //   'Attention mechanism',
+  //   'Backpropagation',
+  //   'Activation functions',
+  //   'Batch normalization',
+  //   'Dropout regularization',
+  //   'Autoencoders',
+  //   'GAN (generative adversarial networks)',
+  //   'Large language models',
+  //   'Vector embeddings'
+  // ],
+
+  // 'nlp': [
+  //   'Tokenization',
+  //   'Word embeddings',
+  //   'Sequence-to-sequence models',
+  //   'Semantic similarity',
+  //   'Part-of-speech tagging',
+  //   'Named entity recognition',
+  //   'Language modeling',
+  //   'Text classification',
+  //   'Sentiment analysis',
+  //   'Machine translation'
+  // ],
+
+  // 'computer-vision': [
+  //   'Image classification',
+  //   'Object detection',
+  //   'OpenCV',
+  //   'Image segmentation',
+  //   'Pose estimation'
+  // ],
+
+  // 'reinforcement-learning': [
+  //   'Q-learning',
+  //   'Policy gradient',
+  //   'Reward function',
+  //   'Markov decision process',
+  //   'Value iteration'
+  // ],
+
+  // // --- GENERAL CS CATEGORIES ---
+  // 'algorithms': [
+  //   'Sorting algorithm',
+  //   'Searching algorithm',
+  //   'Graph algorithm',
+  //   'Greedy algorithms',
+  //   'Dynamic programming'
+  // ],
+
+  // 'data-structures': [
+  //   'Tree (data structure)',
+  //   'Graph (data structure)',
+  //   'Linked list',
+  //   'Stack',
+  //   'Queue',
+  //   'Hash table'
+  // ],
+
+  // 'databases': [
+  //   'SQL',
+  //   'NoSQL',
+  //   'MongoDB',
+  //   'Database schema',
+  //   'Indexing'
+  // ],
+
+  // 'operating-systems': [
+  //   'Process management',
+  //   'Threads',
+  //   'Scheduling algorithms',
+  //   'Memory management',
+  //   'Interrupts'
+  // ],
+
+  // 'computer-networks': [
+  //   'TCP/IP',
+  //   'HTTP',
+  //   'Routing',
+  //   'Packet switching',
+  //   'DNS'
+  // ],
+
+  // 'web-development': [
+  //   'Frontend and backend',
+  //   'JavaScript',
+  //   'React (web framework)',
+  //   'Node.js',
+  //   'REST APIs'
+  // ],
+
+  // // --- MATHEMATICS ---
+  // 'calculus': [
+  //   'Differentiation',
+  //   'Integration',
+  //   'Limits',
+  //   'Series expansion',
+  //   'Multivariable calculus'
+  // ],
+
+  // 'linear-algebra': [
+  //   'Matrix',
+  //   'Vector space',
+  //   'Eigenvalue',
+  //   'Eigenvector',
+  //   'Linear transformation'
+  // ],
+
+  // 'probability-stats': [
+  //   'Bayes theorem',
+  //   'Probability distributions',
+  //   'Mean and variance',
+  //   'Hypothesis testing',
+  //   'Sampling'
+  // ],
+
+  // 'number-theory': [
+  //   'Prime number',
+  //   'Modular arithmetic',
+  //   'Greatest common divisor',
+  //   'Diophantine equations'
+  // ],
+
+  // 'geometry': [
+  //   'Triangles',
+  //   'Circles',
+  //   'Polygons',
+  //   'Coordinate geometry'
+  // ],
+
+  // // --- BIOLOGY ---
+  // 'cell-biology': [
+  //   'Cell structure',
+  //   'Mitochondria',
+  //   'Nucleus',
+  //   'Cell membrane',
+  //   'Cell cycle'
+  // ],
+
+  // 'genetics': [
+  //   'DNA',
+  //   'RNA',
+  //   'Gene expression',
+  //   'Mutation',
+  //   'Genetic inheritance'
+  // ],
+
+  // 'evolution': [
+  //   'Natural selection',
+  //   'Darwin\'s theory',
+  //   'Speciation',
+  //   'Adaptation'
+  // ],
+
+  // 'microbiology': [
+  //   'Virus',
+  //   'Bacteria',
+  //   'Fungi',
+  //   'Microbial infection'
+  // ],
+
+  // // --- CHEMISTRY ---
+  // 'organic-chemistry': [
+  //   'Hydrocarbon',
+  //   'Functional group',
+  //   'Alcohols',
+  //   'Amines',
+  //   'Carboxylic acids'
+  // ],
+
+  // 'inorganic-chemistry': [
+  //   'Metals',
+  //   'Ionic bond',
+  //   'Coordination compound',
+  //   'Transition metals'
+  // ],
+
+  // 'chemical-reactions': [
+  //   'Oxidation',
+  //   'Reduction',
+  //   'Reaction rate',
+  //   'Stoichiometry'
+  // ],
+
+  // 'periodic-table': [
+  //   'Elements',
+  //   'Atomic number',
+  //   'Groups',
+  //   'Periods'
+  // ],
+
+  // // --- SPACE ---
+  // 'solar-system': [
+  //   'Sun',
+  //   'Earth',
+  //   'Mars',
+  //   'Jupiter',
+  //   'Moon',
+  //   'Asteroids'
+  // ],
+
+  // 'galaxies': [
+  //   'Milky Way',
+  //   'Andromeda',
+  //   'Spiral galaxy',
+  //   'Elliptical galaxy',
+  //   'Galaxy clusters'
+  // ],
+
+  // 'cosmology': [
+  //   'Big Bang',
+  //   'Dark matter',
+  //   'Dark energy',
+  //   'Cosmic microwave background'
+  // ],
+
+  // 'space-exploration': [
+  //   'NASA',
+  //   'SpaceX',
+  //   'International Space Station',
+  //   'Apollo program'
+  // ],
+
+  // // --- HISTORY ---
+  // 'world-war-1': [
+  //   'World War I',
+  //   'Allied powers',
+  //   'Central powers',
+  //   'Trench warfare'
+  // ],
+
+  // 'world-war-2': [
+  //   'World War II',
+  //   'Axis powers',
+  //   'Allied forces',
+  //   'Holocaust'
+  // ],
+
+  // 'roman-empire': [
+  //   'Roman Empire',
+  //   'Julius Caesar',
+  //   'Roman senate',
+  //   'Gladiator games'
+  // ],
+
+  // 'mughal-empire': [
+  //   'Mughal Empire',
+  //   'Akbar',
+  //   'Shah Jahan',
+  //   'Taj Mahal'
+  // ],
+
+  // 'industrial-revolution': [
+  //   'Industrial Revolution',
+  //   'Steam engine',
+  //   'Factories',
+  //   'Urbanization'
+  // ],
+
+  // 'american-revolution': [
+  //   'American Revolution',
+  //   'Declaration of Independence',
+  //   'George Washington'
+  // ]
 };
+
 
 const DIFFICULTY_MAP = {
   'quantum-physics': 'advanced',
   'relativity': 'advanced',
-  'thermodynamics': 'advanced',
-  'electromagnetism': 'advanced',
-  'particle-physics': 'advanced',
-  'nuclear-physics': 'advanced',
-  'classical-mechanics': 'intermediate',
-  'astrophysics': 'advanced',
-  'ai-deep-learning': 'advanced',
-  'ai-ml-basics': 'intermediate',
-  'nlp': 'intermediate',
-  'computer-vision': 'intermediate',
-  'reinforcement-learning': 'advanced',
-  'algorithms': 'intermediate',
-  'data-structures': 'intermediate',
-  'databases': 'intermediate',
-  'operating-systems': 'intermediate',
-  'computer-networks': 'intermediate',
-  'web-development': 'intermediate',
-  'calculus': 'advanced',
-  'linear-algebra': 'advanced',
-  'probability-stats': 'intermediate',
-  'number-theory': 'advanced',
-  'geometry': 'beginner',
-  'cell-biology': 'intermediate',
-  'genetics': 'intermediate',
-  'evolution': 'beginner',
-  'microbiology': 'intermediate',
-  'organic-chemistry': 'intermediate',
-  'inorganic-chemistry': 'intermediate',
-  'chemical-reactions': 'intermediate',
-  'periodic-table': 'beginner',
-  'solar-system': 'beginner',
-  'galaxies': 'intermediate',
-  'cosmology': 'advanced',
-  'space-exploration': 'beginner',
-  'world-war-1': 'beginner',
-  'world-war-2': 'beginner',
-  'roman-empire': 'beginner',
-  'mughal-empire': 'beginner',
-  'industrial-revolution': 'beginner',
-  'american-revolution': 'beginner'
+  // 'thermodynamics': 'advanced',
+  // 'electromagnetism': 'advanced',
+  // 'particle-physics': 'advanced',
+  // 'nuclear-physics': 'advanced',
+  // 'classical-mechanics': 'intermediate',
+  // 'astrophysics': 'advanced',
+
+  // 'machine-learning': 'intermediate',
+  // 'deep-learning': 'advanced',
+  // 'nlp': 'intermediate',
+  // 'computer-vision': 'intermediate',
+  // 'reinforcement-learning': 'advanced',
+
+  // 'algorithms': 'intermediate',
+  // 'data-structures': 'intermediate',
+  // 'databases': 'intermediate',
+  // 'operating-systems': 'intermediate',
+  // 'computer-networks': 'intermediate',
+  // 'web-development': 'intermediate',
+
+  // 'calculus': 'advanced',
+  // 'linear-algebra': 'advanced',
+  // 'probability-stats': 'intermediate',
+  // 'number-theory': 'advanced',
+  // 'geometry': 'beginner',
+
+  // 'cell-biology': 'intermediate',
+  // 'genetics': 'intermediate',
+  // 'evolution': 'beginner',
+  // 'microbiology': 'intermediate',
+
+  // 'organic-chemistry': 'intermediate',
+  // 'inorganic-chemistry': 'intermediate',
+  // 'chemical-reactions': 'intermediate',
+  // 'periodic-table': 'beginner',
+
+  // 'solar-system': 'beginner',
+  // 'galaxies': 'intermediate',
+  // 'cosmology': 'advanced',
+  // 'space-exploration': 'beginner',
+
+  // 'world-war-1': 'beginner',
+  // 'world-war-2': 'beginner',
+  // 'roman-empire': 'beginner',
+  // 'mughal-empire': 'beginner',
+  // 'industrial-revolution': 'beginner',
+  // 'american-revolution': 'beginner'
 };
+
 
 
 const fetchWikipediaArticle = async (title) => {

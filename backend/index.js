@@ -15,135 +15,229 @@ let lastSearchQuery = '';
 
 // Category mappings for strict filtering
 const CATEGORY_KEYWORDS = {
+  // --- ADVANCED PHYSICS ---
   'quantum-physics': [
-    'quantum', 'quantum mechanics', 'schrodinger', 'heisenberg', 'superposition',
-    'entanglement', 'wavefunction', 'qubit', 'quantization', 'spin'
+    'quantum', 'quantum mechanics', 'wave function', 'schrodinger',
+    'heisenberg', 'uncertainty principle', 'superposition',
+    'entanglement', 'qubit', 'quantization', 'decoherence',
+    'quantum field theory'
   ],
+
   'relativity': [
-    'relativity', 'einstein', 'spacetime', 'general relativity', 'special relativity',
-    'time dilation', 'gravity curvature'
-  ],
-  'thermodynamics': [
-    'thermodynamics', 'entropy', 'enthalpy', 'heat transfer', 'temperature', 'laws of thermodynamics'
-  ],
-  'electromagnetism': [
-    'electromagnetism', 'electric field', 'magnetic field', 'maxwell equations',
-    'electrodynamics', 'charge', 'current'
-  ],
-  'particle-physics': [
-    'particle physics', 'boson', 'fermion', 'quark', 'lepton', 'hadron', 'standard model'
-  ],
-  'nuclear-physics': [
-    'nuclear physics', 'radioactivity', 'nuclear fission', 'nuclear fusion', 'isotope'
-  ],
-  'classical-mechanics': [
-    'mechanics', 'newton laws', 'forces', 'motion', 'kinematics', 'dynamics'
-  ],
-  'astrophysics': [
-    'astrophysics', 'stars', 'galaxies', 'cosmic', 'supernova', 'neutron star', 'space-time'
-  ],
-  'ai-deep-learning': [
-    'deep learning', 'neural network', 'cnn', 'rnn', 'transformer', 'backpropagation'
-  ],
-  'ai-ml-basics': [
-    'machine learning', 'supervised', 'unsupervised', 'reinforcement learning', 'model training'
-  ],
-  'nlp': [
-    'nlp', 'language model', 'text processing', 'tokenization', 'embedding'
-  ],
-  'computer-vision': [
-    'computer vision', 'image recognition', 'object detection', 'opencv'
-  ],
-  'reinforcement-learning': [
-    'reinforcement learning', 'rl agent', 'reward function', 'q learning'
-  ],
-  'algorithms': [
-    'algorithm', 'sorting', 'searching', 'complexity', 'big o'
-  ],
-  'data-structures': [
-    'data structure', 'tree', 'graph', 'linked list', 'stack', 'queue'
-  ],
-  'databases': [
-    'database', 'sql', 'nosql', 'mongodb', 'queries', 'schema'
-  ],
-  'operating-systems': [
-    'operating system', 'process', 'thread', 'scheduling', 'memory management'
-  ],
-  'computer-networks': [
-    'network', 'protocol', 'ip', 'tcp', 'router', 'http'
-  ],
-  'web-development': [
-    'web development', 'frontend', 'backend', 'javascript', 'react', 'node', 'api'
-  ],
-  'calculus': [
-    'calculus', 'derivative', 'integral', 'limits', 'rate of change'
-  ],
-  'linear-algebra': [
-    'linear algebra', 'matrix', 'vector', 'eigenvalue', 'eigenvector'
-  ],
-  'probability-stats': [
-    'probability', 'statistics', 'bayes', 'distribution', 'mean', 'variance'
-  ],
-  'number-theory': [
-    'number theory', 'primes', 'modular arithmetic', 'gcd'
-  ],
-  'geometry': [
-    'geometry', 'shapes', 'angles', 'triangles', 'polygons'
-  ],
-  'cell-biology': [
-    'cell', 'organelles', 'mitochondria', 'cell membrane'
-  ],
-  'genetics': [
-    'genetics', 'gene', 'dna', 'rna', 'mutation', 'heredity'
-  ],
-  'evolution': [
-    'evolution', 'darwin', 'natural selection', 'adaptation', 'species'
-  ],
-  'microbiology': [
-    'microbiology', 'virus', 'bacteria', 'pathogen'
-  ],
-  'organic-chemistry': [
-    'organic chemistry', 'hydrocarbon', 'alkane', 'alkene', 'functional group'
-  ],
-  'inorganic-chemistry': [
-    'inorganic chemistry', 'metal', 'ionic bond', 'coordination compound'
-  ],
-  'chemical-reactions': [
-    'chemical reaction', 'oxidation', 'reduction', 'stoichiometry'
-  ],
-  'periodic-table': [
-    'periodic table', 'elements', 'atomic number', 'groups', 'periods'
-  ],
-  'solar-system': [
-    'solar system', 'sun', 'planet', 'orbit', 'moon', 'asteroid'
-  ],
-  'galaxies': [
-    'galaxy', 'milky way', 'andromeda', 'spiral galaxy'
-  ],
-  'cosmology': [
-    'cosmology', 'big bang', 'dark matter', 'dark energy', 'expansion'
-  ],
-  'space-exploration': [
-    'nasa', 'spacex', 'iss', 'apollo', 'rocket'
-  ],
-  'world-war-1': [
-    'world war i', 'ww1', 'allies', 'central powers', 'trench warfare'
-  ],
-  'world-war-2': [
-    'world war ii', 'ww2', 'axis', 'allies', 'hitler', 'holocaust'
-  ],
-  'roman-empire': [
-    'roman empire', 'rome', 'caesar', 'senate', 'roman army'
-  ],
-  'mughal-empire': [
-    'mughal empire', 'akbar', 'shah jahan', 'taj mahal', 'aurangzeb'
-  ],
-  'industrial-revolution': [
-    'industrial revolution', 'factories', 'steam engine', 'mass production'
-  ],
-  'american-revolution': [
-    'american revolution', 'independence', 'colonies', 'george washington'
+    'relativity', 'einstein', 'spacetime', 'time dilation',
+    'general relativity', 'special relativity', 'gravity curvature',
+    'lorentz', 'mass energy', 'gravitational waves'
   ]
+
+  // 'thermodynamics': [
+  //   'thermodynamics', 'entropy', 'enthalpy', 'heat', 'temperature',
+  //   'thermal equilibrium', 'carnot cycle'
+  // ],
+
+  // 'electromagnetism': [
+  //   'electromagnetism', 'electric field', 'magnetic field',
+  //   'maxwell equations', 'lorentz force', 'electrodynamics'
+  // ],
+
+  // 'particle-physics': [
+  //   'particle physics', 'boson', 'fermion', 'quark', 'lepton',
+  //   'standard model', 'higgs boson', 'neutrino'
+  // ],
+
+  // 'nuclear-physics': [
+  //   'nuclear physics', 'radioactive', 'isotope', 'nuclear fission',
+  //   'nuclear fusion', 'binding energy'
+  // ],
+
+  // 'classical-mechanics': [
+  //   'mechanics', 'newton laws', 'force', 'motion',
+  //   'kinematics', 'dynamics', 'momentum'
+  // ],
+
+  // 'astrophysics': [
+  //   'astrophysics', 'supernova', 'neutron star', 'pulsar',
+  //   'exoplanet', 'accretion disk', 'cosmic'
+  // ],
+
+  // // --- AI + MACHINE LEARNING ---
+  // 'machine-learning': [
+  //   'machine learning', 'supervised', 'unsupervised', 'reinforcement',
+  //   'gradient descent', 'loss function', 'model training',
+  //   'overfitting', 'regularization', 'evaluation metrics'
+  // ],
+
+  // 'deep-learning': [
+  //   'deep learning', 'neural network', 'cnn', 'rnn', 'transformer',
+  //   'attention mechanism', 'backpropagation', 'activation function',
+  //   'batch norm', 'dropout', 'autoencoder', 'gan'
+  // ],
+
+  // 'nlp': [
+  //   'nlp', 'natural language', 'large language model', 'llm',
+  //   'tokenization', 'semantic similarity', 'text processing',
+  //   'embedding', 'classification', 'sentiment analysis'
+  // ],
+
+  // 'computer-vision': [
+  //   'computer vision', 'opencv', 'image classification',
+  //   'object detection', 'segmentation', 'pose estimation'
+  // ],
+
+  // 'reinforcement-learning': [
+  //   'reinforcement learning', 'rl', 'reward', 'policy', 'q learning',
+  //   'mdp', 'value iteration'
+  // ],
+
+  // // --- COMPUTER SCIENCE ---
+  // 'algorithms': [
+  //   'algorithm', 'sorting', 'searching', 'graph algorithm',
+  //   'dynamic programming', 'complexity', 'big o'
+  // ],
+
+  // 'data-structures': [
+  //   'data structure', 'tree', 'graph', 'linked list',
+  //   'stack', 'queue', 'hash table'
+  // ],
+
+  // 'databases': [
+  //   'database', 'sql', 'nosql', 'mongodb',
+  //   'query', 'indexing', 'schema'
+  // ],
+
+  // 'operating-systems': [
+  //   'operating system', 'process', 'thread',
+  //   'scheduling', 'memory management', 'interrupt'
+  // ],
+
+  // 'computer-networks': [
+  //   'network', 'protocol', 'ip', 'tcp', 'routing',
+  //   'http', 'packet switching'
+  // ],
+
+  // 'web-development': [
+  //   'web dev', 'frontend', 'backend',
+  //   'javascript', 'react', 'node', 'api', 'full stack'
+  // ],
+
+  // // --- MATHEMATICS ---
+  // 'calculus': [
+  //   'calculus', 'derivative', 'integral', 'limit',
+  //   'rate of change', 'multivariable'
+  // ],
+
+  // 'linear-algebra': [
+  //   'linear algebra', 'matrix', 'vector',
+  //   'eigenvalue', 'eigenvector', 'linear transformation'
+  // ],
+
+  // 'probability-stats': [
+  //   'probability', 'statistics', 'bayes theorem',
+  //   'distribution', 'variance', 'hypothesis testing'
+  // ],
+
+  // 'number-theory': [
+  //   'number theory', 'prime', 'modular arithmetic', 'gcd',
+  //   'diophantine'
+  // ],
+
+  // 'geometry': [
+  //   'geometry', 'circle', 'triangle',
+  //   'polygon', 'coordinate geometry'
+  // ],
+
+  // // --- BIOLOGY ---
+  // 'cell-biology': [
+  //   'cell', 'organelle', 'mitochondria', 'nucleus',
+  //   'cell membrane', 'cell cycle'
+  // ],
+
+  // 'genetics': [
+  //   'genetics', 'gene', 'dna', 'rna',
+  //   'mutation', 'inheritance'
+  // ],
+
+  // 'evolution': [
+  //   'evolution', 'darwin', 'natural selection',
+  //   'adaptation', 'speciation'
+  // ],
+
+  // 'microbiology': [
+  //   'microbiology', 'virus', 'bacteria',
+  //   'fungi', 'infection'
+  // ],
+
+  // // --- CHEMISTRY ---
+  // 'organic-chemistry': [
+  //   'organic chemistry', 'hydrocarbon',
+  //   'functional group', 'alcohol', 'amine', 'carboxyl'
+  // ],
+
+  // 'inorganic-chemistry': [
+  //   'inorganic chemistry', 'metal', 'ionic bond',
+  //   'coordination compound', 'transition metal'
+  // ],
+
+  // 'chemical-reactions': [
+  //   'chemical reaction', 'oxidation', 'reduction',
+  //   'reaction rate', 'stoichiometry'
+  // ],
+
+  // 'periodic-table': [
+  //   'periodic table', 'element', 'atomic number',
+  //   'group', 'period', 'electron configuration'
+  // ],
+
+  // // --- SPACE ---
+  // 'solar-system': [
+  //   'solar system', 'planet', 'sun', 'orbit',
+  //   'moon', 'asteroid'
+  // ],
+
+  // 'galaxies': [
+  //   'galaxy', 'milky way', 'andromeda',
+  //   'spiral galaxy', 'elliptical galaxy'
+  // ],
+
+  // 'cosmology': [
+  //   'cosmology', 'big bang', 'dark matter',
+  //   'dark energy', 'cmb', 'expansion'
+  // ],
+
+  // 'space-exploration': [
+  //   'space exploration', 'nasa', 'spacex',
+  //   'iss', 'apollo', 'rocket launch'
+  // ],
+
+  // // --- HISTORY ---
+  // 'world-war-1': [
+  //   'world war 1', 'ww1', 'allies', 'central powers',
+  //   'trench warfare', 'armistice'
+  // ],
+
+  // 'world-war-2': [
+  //   'world war 2', 'ww2', 'axis', 'allies',
+  //   'hitler', 'holocaust'
+  // ],
+
+  // 'roman-empire': [
+  //   'roman empire', 'rome', 'caesar',
+  //   'senate', 'roman army'
+  // ],
+
+  // 'mughal-empire': [
+  //   'mughal empire', 'akbar', 'shah jahan',
+  //   'taj mahal', 'aurangzeb'
+  // ],
+
+  // 'industrial-revolution': [
+  //   'industrial revolution', 'factories',
+  //   'steam engine', 'innovation', 'urbanization'
+  // ],
+
+  // 'american-revolution': [
+  //   'american revolution', 'independence',
+  //   'colonies', 'george washington', 'british'
+  // ]
 };
 
 const getQueryCategory = (query) => {

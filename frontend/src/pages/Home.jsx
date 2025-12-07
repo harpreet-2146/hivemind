@@ -1,163 +1,11 @@
-// import { useState } from 'react';
-// import SearchBar from '../components/SearchBar';
-// import ConstellationGraph from '../components/ConstellationGraph';
-// import ChatSidebar from '../components/ChatSidebar';
-// import DetailPanel from '../components/DetailPanel';
-// import { searchDocuments, buildGraphFromResults } from '../services/api';
-
-// function Home() {
-//   const [searchResults, setSearchResults] = useState([]);
-//   const [graphData, setGraphData] = useState({ nodes: [], edges: [] });
-//   const [selectedNode, setSelectedNode] = useState(null);
-//   const [loading, setLoading] = useState(false);
-//   const [chatOpen, setChatOpen] = useState(false);
-//   const [currentQuery, setCurrentQuery] = useState('');
-
-//   const handleSearch = async (query) => {
-//     if (!query.trim()) return;
-
-//     setLoading(true);
-//     setCurrentQuery(query);
-//     setSelectedNode(null);
-
-//     try {
-//       const results = await searchDocuments(query);
-//       setSearchResults(results);
-
-//       const graph = buildGraphFromResults(results);
-//       setGraphData(graph);
-//     } catch (error) {
-//       console.error('Search failed:', error);
-//     } finally {
-//       setLoading(false);
-//     }
-//   };
-
-//   const handleNodeClick = (nodeData) => {
-//     // Find full doc from search results
-//     const doc = searchResults.find((d) => d.id === nodeData.id);
-
-//     setSelectedNode({
-//       id: nodeData.id,
-//       label: nodeData.label || doc?.title || nodeData.id,
-//       difficulty: nodeData.difficulty || doc?.difficulty,
-//       order: nodeData.order,
-//       doc: doc || null,
-//     });
-//   };
-
-//   const handleCloseDetail = () => {
-//     setSelectedNode(null);
-//   };
-
-//   return (
-//     <div className="h-screen w-screen bg-gray-950 text-white flex flex-col overflow-hidden">
-//       {/* Header */}
-//       <header className="flex items-center justify-between px-6 py-4 border-b border-gray-800">
-//         <div className="flex items-center gap-2">
-//           <span className="text-2xl">🐝</span>
-//           <h1 className="text-xl font-bold">Hivemind</h1>
-//         </div>
-
-//         <div className="flex-1 max-w-xl mx-8">
-//           <SearchBar onSearch={handleSearch} loading={loading} />
-//         </div>
-
-//         <button
-//           className="w-10 h-10 rounded-full bg-gray-800 hover:bg-gray-700 flex items-center justify-center text-lg"
-//           onClick={() => setChatOpen(!chatOpen)}
-//         >
-//           💬
-//         </button>
-//       </header>
-
-//       {/* Main Content */}
-//       <main className="flex-1 flex relative overflow-hidden">
-//         {/* Graph Area */}
-//         <div className={`flex-1 relative transition-all duration-300 ${selectedNode ? 'mr-96' : ''}`}>
-//           {currentQuery && (
-//             <div className="absolute top-4 left-4 z-10 bg-gray-900/80 px-3 py-1 rounded-full text-sm">
-//               Results for: <span className="font-semibold text-yellow-400">{currentQuery}</span>
-//               <span className="ml-2 text-gray-400">({searchResults.length} found)</span>
-//             </div>
-//           )}
-
-//           {searchResults.length === 0 ? (
-//             <div className="h-full flex flex-col items-center justify-center text-gray-500">
-//               <span className="text-6xl mb-4">🔍</span>
-//               <p className="text-lg">Search for a topic to explore</p>
-//               <p className="text-sm mt-2">Try: "machine learning", "neural networks", "deep learning"</p>
-//             </div>
-//           ) : (
-//             <ConstellationGraph
-//               data={graphData}
-//               onNodeClick={handleNodeClick}
-//               selectedId={selectedNode?.id}
-//             />
-//           )}
-
-//           {/* Legend */}
-//           {searchResults.length > 0 && (
-//             <div className="absolute bottom-4 left-4 z-10 flex gap-4 bg-gray-900/80 px-4 py-2 rounded-lg text-sm">
-//               <div className="flex items-center gap-2">
-//                 <span className="w-3 h-3 rounded-full bg-green-500"></span>
-//                 <span>Beginner</span>
-//               </div>
-//               <div className="flex items-center gap-2">
-//                 <span className="w-3 h-3 rounded-full bg-yellow-500"></span>
-//                 <span>Intermediate</span>
-//               </div>
-//               <div className="flex items-center gap-2">
-//                 <span className="w-3 h-3 rounded-full bg-red-500"></span>
-//                 <span>Advanced</span>
-//               </div>
-//             </div>
-//           )}
-
-//           {/* Click hint */}
-//           {searchResults.length > 0 && !selectedNode && (
-//             <div className="absolute bottom-4 right-4 z-10 bg-gray-900/80 px-3 py-2 rounded-lg text-sm text-gray-400">
-//               👆 Click a node to see details
-//             </div>
-//           )}
-//         </div>
-
-//         {/* Detail Panel - Fixed Right Side */}
-//         {selectedNode && (
-//           <div className="absolute top-0 right-0 h-full w-96 z-20">
-//             <DetailPanel node={selectedNode} onClose={handleCloseDetail} />
-//           </div>
-//         )}
-//       </main>
-
-//       {/* Chat Sidebar */}
-//       <div
-//         className={`fixed top-0 right-0 h-full w-80 bg-gray-900 border-l border-gray-800 transform transition-transform duration-300 z-50 ${
-//           chatOpen ? 'translate-x-0' : 'translate-x-full'
-//         }`}
-//       >
-//         <ChatSidebar context={searchResults} onClose={() => setChatOpen(false)} />
-//       </div>
-
-//       {/* Overlay */}
-//       {chatOpen && (
-//         <div
-//           className="fixed inset-0 bg-black/50 z-40"
-//           onClick={() => setChatOpen(false)}
-//         />
-//       )}
-//     </div>
-//   );
-// }
-
-// export default Home;
-
 import { useState } from 'react';
 import SearchBar from '../components/SearchBar';
 import ConstellationGraph from '../components/ConstellationGraph';
 import ChatSidebar from '../components/ChatSidebar';
+import VoiceChat from '../components/VoiceChat';
+import LiquidEther from '../components/LiquidEther';
 import DetailPanel from '../components/DetailPanel';
-import Galaxy from '../components/Galaxy';
+
 import { searchDocuments, buildGraphFromResults } from '../services/api';
 
 function Home() {
@@ -165,7 +13,11 @@ function Home() {
   const [graphData, setGraphData] = useState({ nodes: [], edges: [] });
   const [selectedNode, setSelectedNode] = useState(null);
   const [loading, setLoading] = useState(false);
+
+  // chat UI state (purely UI)
   const [chatOpen, setChatOpen] = useState(false);
+  const [chatMode, setChatMode] = useState('text'); // 'text' | 'voice'
+
   const [currentQuery, setCurrentQuery] = useState('');
 
   const handleSearch = async (query) => {
@@ -189,7 +41,6 @@ function Home() {
   };
 
   const handleNodeClick = (nodeData) => {
-    // Find full doc from search results
     const doc = searchResults.find((d) => d.id === nodeData.id);
 
     setSelectedNode({
@@ -210,11 +61,8 @@ function Home() {
       {/* Header */}
       <header className="z-30 relative flex items-center justify-between px-6 py-3">
         <div className="flex items-center gap-3">
-          <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-600/40 to-violet-500/20 border border-white/6 shadow-sm">
-            <span className="text-lg">🐝</span>
-          </div>
           <div>
-            <h1 className="text-lg font-extrabold tracking-tight">Hivemind</h1>
+            <h1 onClick={() => window.location.href = '/'} className="text-lg font-extrabold tracking-tight">Hivemind</h1>
             <div className="text-xs text-indigo-200/60 -mt-0.5">Explore. Connect. Understand.</div>
           </div>
         </div>
@@ -227,12 +75,23 @@ function Home() {
 
         <div className="flex items-center gap-3">
           <div className="text-sm text-slate-300 hidden sm:block">Context: {searchResults.length}</div>
+
+          {/* --- AI CHAT BUTTON (more descriptive + visible) --- */}
           <button
-            className="w-10 h-10 rounded-lg bg-gradient-to-br from-indigo-600/30 to-violet-500/20 border border-white/6 flex items-center justify-center text-lg shadow hover:translate-y-[-2px] transition-transform"
-            onClick={() => setChatOpen(!chatOpen)}
-            aria-label="Toggle chat sidebar"
+            onClick={() => {
+              // open chat and default mode to text
+              setChatMode('text');
+              setChatOpen((s) => !s);
+            }}
+            aria-label="Open AI Chat"
+            className="flex items-center gap-2 px-3 py-2 rounded-2xl bg-gradient-to-br from-indigo-600/40 to-violet-500/20 border border-white/6 hover:scale-[1.02] transition transform shadow"
+            title="Open AI Chat"
           >
-            💬
+            <span className="w-8 h-8 rounded-full bg-indigo-600 flex items-center justify-center text-white shadow">💬</span>
+            <div className="hidden sm:flex flex-col text-left">
+              <span className="text-xs text-indigo-100 font-semibold leading-tight">AI Chat</span>
+              <span className="text-[11px] text-indigo-200/60">Ask Hivemind anything</span>
+            </div>
           </button>
         </div>
       </header>
@@ -241,22 +100,28 @@ function Home() {
       <main className="flex-1 relative flex overflow-hidden">
         {/* Graph area */}
         <div className={`flex-1 relative transition-all duration-300 ${selectedNode ? 'pr-96' : ''}`}>
-          {/* Galaxy background fills the graph area */}
           <div className="absolute inset-0 z-0">
-            <Galaxy
-              mouseRepulsion={true}
-              mouseInteraction={true}
-              density={1.2}
-              glowIntensity={0.45}
-              saturation={0.8}
-              hueShift={240}
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/30 pointer-events-none" />
-          </div>
+                  <LiquidEther
+                    colors={[ '#5227FF', '#FF9FFC', '#B19EEF' ]}
+                    mouseForce={20}
+                    cursorSize={100}
+                    isViscous={false}
+                    viscous={30}
+                    iterationsViscous={32}
+                    iterationsPoisson={32}
+                    resolution={0.5}
+                    isBounce={false}
+                    autoDemo={true}
+                    autoSpeed={0.5}
+                    autoIntensity={2.2}
+                    takeoverDuration={0.25}
+                    autoResumeDelay={3000}
+                    autoRampDuration={0.6}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-black/40 pointer-events-none" />
+                </div>
 
-          {/* Overlay container for content */}
           <div className="relative z-10 w-full h-full flex flex-col">
-            {/* Top badge / query info */}
             {currentQuery && (
               <div className="absolute top-5 left-5 z-20">
                 <div className="inline-flex items-center gap-3 bg-white/4 backdrop-blur-md border border-white/8 px-3 py-2 rounded-full text-sm">
@@ -267,10 +132,8 @@ function Home() {
               </div>
             )}
 
-            {/* Empty state */}
             {searchResults.length === 0 ? (
               <div className="h-full flex flex-col items-center justify-center px-6 text-center">
-                <div className="text-indigo-300/70 text-7xl mb-4">🔎</div>
                 <div className="text-lg font-semibold text-slate-200 mb-2">Search to begin exploring ideas</div>
                 <div className="text-sm text-slate-400 max-w-xl">
                   Try queries like <span className="text-indigo-200 font-medium">"machine learning"</span>, <span className="text-indigo-200 font-medium">"quantum entanglement"</span>, or <span className="text-indigo-200 font-medium">"calculus"</span>.
@@ -292,7 +155,6 @@ function Home() {
               </div>
             )}
 
-            {/* Legend */}
             {searchResults.length > 0 && (
               <div className="absolute bottom-6 left-6 z-20">
                 <div className="flex items-center gap-3 bg-white/6 backdrop-blur rounded-lg px-3 py-2 border border-white/8 text-sm">
@@ -312,7 +174,6 @@ function Home() {
               </div>
             )}
 
-            {/* Click hint */}
             {searchResults.length > 0 && !selectedNode && (
               <div className="absolute bottom-6 right-6 z-20">
                 <div className="bg-white/6 backdrop-blur-md border border-white/8 px-3 py-2 rounded-lg text-sm text-gray-200">
@@ -333,15 +194,61 @@ function Home() {
         )}
       </main>
 
-      {/* Chat Sidebar */}
+      {/* Chat / Voice Panel (UI-only) */}
       <div
-        className={`fixed top-0 right-0 h-full w-80 z-40 transform transition-transform duration-300 ${
+        className={`fixed top-0 right-0 h-full z-40 transform transition-transform duration-300 ${
           chatOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
+        style={{ width: chatOpen ? 420 : 0 }} // wider panel when open (420px)
       >
-        <div className="h-full bg-gradient-to-b from-[#0b0a12]/90 to-[#070617]/95 border-l border-white/6 shadow-2xl">
-          <ChatSidebar context={searchResults} onClose={() => setChatOpen(false)} />
-        </div>
+        {chatOpen && (
+          <div className="h-full bg-gradient-to-b from-[#0b0a12]/90 to-[#070617]/95 border-l border-white/6 shadow-2xl">
+            {/* Panel Header (UI) */}
+            <div className="flex items-center justify-between px-4 py-3 border-b border-white/8">
+              <div className="flex items-center gap-3">
+                <div className="w-9 h-9 rounded-lg bg-indigo-700 flex items-center justify-center text-white">AI</div>
+                <div>
+                  <div className="text-sm font-semibold">Hivemind AI Chat</div>
+                  <div className="text-xs text-indigo-200/60">Text & Voice assistant</div>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-2">
+                {/* Mode toggle — UI-only, uses existing components */}
+                <div className="bg-white/5 rounded-full flex overflow-hidden text-xs">
+                  <button
+                    onClick={() => setChatMode('text')}
+                    className={`px-3 py-1 ${chatMode === 'text' ? 'bg-white/10 font-semibold' : 'text-indigo-200/60'}`}
+                  >
+                    Text
+                  </button>
+                  <button
+                    onClick={() => setChatMode('voice')}
+                    className={`px-3 py-1 ${chatMode === 'voice' ? 'bg-white/10 font-semibold' : 'text-indigo-200/60'}`}
+                  >
+                    Voice
+                  </button>
+                </div>
+
+                <button
+                  onClick={() => setChatOpen(false)}
+                  className="w-9 h-9 rounded-lg bg-white/4 hover:bg-white/6 transition flex items-center justify-center border border-white/8"
+                >
+                  ✕
+                </button>
+              </div>
+            </div>
+
+            {/* Render selected mode component (UI only) */}
+            <div className="h-[calc(100%-64px)]">
+              {chatMode === 'text' ? (
+                <ChatSidebar context={searchResults} onClose={() => setChatOpen(false)} />
+              ) : (
+                <VoiceChat context={searchResults} onClose={() => setChatOpen(false)} />
+              )}
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Overlay when chat open */}
