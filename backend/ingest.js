@@ -2,7 +2,7 @@ require('dotenv').config();
 const axios = require('axios');
 const meilisearch = require('./services/meilisearch');
 const qdrant = require('./services/qdrant');
-const memgraph = require('./services/memgraph');
+//const memgraph = require('./services/memgraph');
 const gemini = require('./services/gemini');
 
 const TOPICS_BY_CATEGORY = {
@@ -35,398 +35,398 @@ const TOPICS_BY_CATEGORY = {
     'Relativistic mechanics'
   ]
 
-  // 'thermodynamics': [
-  //   'Laws of thermodynamics',
-  //   'Entropy',
-  //   'Enthalpy',
-  //   'Free energy',
-  //   'Heat transfer',
-  //   'Thermal equilibrium',
-  //   'Carnot engine'
-  // ],
+  'thermodynamics': [
+    'Laws of thermodynamics',
+    'Entropy',
+    'Enthalpy',
+    'Free energy',
+    'Heat transfer',
+    'Thermal equilibrium',
+    'Carnot engine'
+  ],
 
-  // 'electromagnetism': [
-  //   'Maxwell\'s equations',
-  //   'Electric field',
-  //   'Magnetic field',
-  //   'Electromagnetic induction',
-  //   'Electromagnetic radiation',
-  //   'Lorentz force'
-  // ],
+  'electromagnetism': [
+    'Maxwell\'s equations',
+    'Electric field',
+    'Magnetic field',
+    'Electromagnetic induction',
+    'Electromagnetic radiation',
+    'Lorentz force'
+  ],
 
-  // 'particle-physics': [
-  //   'Standard Model',
-  //   'Boson',
-  //   'Fermion',
-  //   'Quark',
-  //   'Lepton',
-  //   'Higgs boson',
-  //   'Neutrino oscillation'
-  // ],
+  'particle-physics': [
+    'Standard Model',
+    'Boson',
+    'Fermion',
+    'Quark',
+    'Lepton',
+    'Higgs boson',
+    'Neutrino oscillation'
+  ],
 
-  // 'nuclear-physics': [
-  //   'Radioactivity',
-  //   'Nuclear fission',
-  //   'Nuclear fusion',
-  //   'Isotopes',
-  //   'Binding energy'
-  // ],
+  'nuclear-physics': [
+    'Radioactivity',
+    'Nuclear fission',
+    'Nuclear fusion',
+    'Isotopes',
+    'Binding energy'
+  ],
 
-  // 'classical-mechanics': [
-  //   'Newton\'s laws',
-  //   'Kinematics',
-  //   'Dynamics',
-  //   'Momentum',
-  //   'Energy conservation',
-  //   'Rotational motion'
-  // ],
+  'classical-mechanics': [
+    'Newton\'s laws',
+    'Kinematics',
+    'Dynamics',
+    'Momentum',
+    'Energy conservation',
+    'Rotational motion'
+  ],
 
-  // 'astrophysics': [
-  //   'Supernova',
-  //   'Neutron star',
-  //   'Pulsar',
-  //   'Exoplanet',
-  //   'Accretion disk',
-  //   'Cosmic rays'
-  // ],
+  'astrophysics': [
+    'Supernova',
+    'Neutron star',
+    'Pulsar',
+    'Exoplanet',
+    'Accretion disk',
+    'Cosmic rays'
+  ],
 
-  // // --- AI + ML EXPANDED CATEGORIES ---
-  // 'machine-learning': [
-  //   'Supervised learning',
-  //   'Unsupervised learning',
-  //   'Reinforcement learning',
-  //   'Gradient descent',
-  //   'Loss functions',
-  //   'Decision trees',
-  //   'Support vector machines',
-  //   'Model evaluation metrics',
-  //   'Bias–variance tradeoff',
-  //   'Regularization',
-  //   'Ensemble learning',
-  //   'Overfitting and underfitting'
-  // ],
+  // --- AI + ML EXPANDED CATEGORIES ---
+  'machine-learning': [
+    'Supervised learning',
+    'Unsupervised learning',
+    'Reinforcement learning',
+    'Gradient descent',
+    'Loss functions',
+    'Decision trees',
+    'Support vector machines',
+    'Model evaluation metrics',
+    'Bias–variance tradeoff',
+    'Regularization',
+    'Ensemble learning',
+    'Overfitting and underfitting'
+  ],
 
-  // 'deep-learning': [
-  //   'Neural networks',
-  //   'Convolutional neural network',
-  //   'Recurrent neural network',
-  //   'Transformer architecture',
-  //   'Attention mechanism',
-  //   'Backpropagation',
-  //   'Activation functions',
-  //   'Batch normalization',
-  //   'Dropout regularization',
-  //   'Autoencoders',
-  //   'GAN (generative adversarial networks)',
-  //   'Large language models',
-  //   'Vector embeddings'
-  // ],
+  'deep-learning': [
+    'Neural networks',
+    'Convolutional neural network',
+    'Recurrent neural network',
+    'Transformer architecture',
+    'Attention mechanism',
+    'Backpropagation',
+    'Activation functions',
+    'Batch normalization',
+    'Dropout regularization',
+    'Autoencoders',
+    'GAN (generative adversarial networks)',
+    'Large language models',
+    'Vector embeddings'
+  ],
 
-  // 'nlp': [
-  //   'Tokenization',
-  //   'Word embeddings',
-  //   'Sequence-to-sequence models',
-  //   'Semantic similarity',
-  //   'Part-of-speech tagging',
-  //   'Named entity recognition',
-  //   'Language modeling',
-  //   'Text classification',
-  //   'Sentiment analysis',
-  //   'Machine translation'
-  // ],
+  'nlp': [
+    'Tokenization',
+    'Word embeddings',
+    'Sequence-to-sequence models',
+    'Semantic similarity',
+    'Part-of-speech tagging',
+    'Named entity recognition',
+    'Language modeling',
+    'Text classification',
+    'Sentiment analysis',
+    'Machine translation'
+  ],
 
-  // 'computer-vision': [
-  //   'Image classification',
-  //   'Object detection',
-  //   'OpenCV',
-  //   'Image segmentation',
-  //   'Pose estimation'
-  // ],
+  'computer-vision': [
+    'Image classification',
+    'Object detection',
+    'OpenCV',
+    'Image segmentation',
+    'Pose estimation'
+  ],
 
-  // 'reinforcement-learning': [
-  //   'Q-learning',
-  //   'Policy gradient',
-  //   'Reward function',
-  //   'Markov decision process',
-  //   'Value iteration'
-  // ],
+  'reinforcement-learning': [
+    'Q-learning',
+    'Policy gradient',
+    'Reward function',
+    'Markov decision process',
+    'Value iteration'
+  ],
 
-  // // --- GENERAL CS CATEGORIES ---
-  // 'algorithms': [
-  //   'Sorting algorithm',
-  //   'Searching algorithm',
-  //   'Graph algorithm',
-  //   'Greedy algorithms',
-  //   'Dynamic programming'
-  // ],
+  // --- GENERAL CS CATEGORIES ---
+  'algorithms': [
+    'Sorting algorithm',
+    'Searching algorithm',
+    'Graph algorithm',
+    'Greedy algorithms',
+    'Dynamic programming'
+  ],
 
-  // 'data-structures': [
-  //   'Tree (data structure)',
-  //   'Graph (data structure)',
-  //   'Linked list',
-  //   'Stack',
-  //   'Queue',
-  //   'Hash table'
-  // ],
+  'data-structures': [
+    'Tree (data structure)',
+    'Graph (data structure)',
+    'Linked list',
+    'Stack',
+    'Queue',
+    'Hash table'
+  ],
 
-  // 'databases': [
-  //   'SQL',
-  //   'NoSQL',
-  //   'MongoDB',
-  //   'Database schema',
-  //   'Indexing'
-  // ],
+  'databases': [
+    'SQL',
+    'NoSQL',
+    'MongoDB',
+    'Database schema',
+    'Indexing'
+  ],
 
-  // 'operating-systems': [
-  //   'Process management',
-  //   'Threads',
-  //   'Scheduling algorithms',
-  //   'Memory management',
-  //   'Interrupts'
-  // ],
+  'operating-systems': [
+    'Process management',
+    'Threads',
+    'Scheduling algorithms',
+    'Memory management',
+    'Interrupts'
+  ],
 
-  // 'computer-networks': [
-  //   'TCP/IP',
-  //   'HTTP',
-  //   'Routing',
-  //   'Packet switching',
-  //   'DNS'
-  // ],
+  'computer-networks': [
+    'TCP/IP',
+    'HTTP',
+    'Routing',
+    'Packet switching',
+    'DNS'
+  ],
 
-  // 'web-development': [
-  //   'Frontend and backend',
-  //   'JavaScript',
-  //   'React (web framework)',
-  //   'Node.js',
-  //   'REST APIs'
-  // ],
+  'web-development': [
+    'Frontend and backend',
+    'JavaScript',
+    'React (web framework)',
+    'Node.js',
+    'REST APIs'
+  ],
 
-  // // --- MATHEMATICS ---
-  // 'calculus': [
-  //   'Differentiation',
-  //   'Integration',
-  //   'Limits',
-  //   'Series expansion',
-  //   'Multivariable calculus'
-  // ],
+  // --- MATHEMATICS ---
+  'calculus': [
+    'Differentiation',
+    'Integration',
+    'Limits',
+    'Series expansion',
+    'Multivariable calculus'
+  ],
 
-  // 'linear-algebra': [
-  //   'Matrix',
-  //   'Vector space',
-  //   'Eigenvalue',
-  //   'Eigenvector',
-  //   'Linear transformation'
-  // ],
+  'linear-algebra': [
+    'Matrix',
+    'Vector space',
+    'Eigenvalue',
+    'Eigenvector',
+    'Linear transformation'
+  ],
 
-  // 'probability-stats': [
-  //   'Bayes theorem',
-  //   'Probability distributions',
-  //   'Mean and variance',
-  //   'Hypothesis testing',
-  //   'Sampling'
-  // ],
+  'probability-stats': [
+    'Bayes theorem',
+    'Probability distributions',
+    'Mean and variance',
+    'Hypothesis testing',
+    'Sampling'
+  ],
 
-  // 'number-theory': [
-  //   'Prime number',
-  //   'Modular arithmetic',
-  //   'Greatest common divisor',
-  //   'Diophantine equations'
-  // ],
+  'number-theory': [
+    'Prime number',
+    'Modular arithmetic',
+    'Greatest common divisor',
+    'Diophantine equations'
+  ],
 
-  // 'geometry': [
-  //   'Triangles',
-  //   'Circles',
-  //   'Polygons',
-  //   'Coordinate geometry'
-  // ],
+  'geometry': [
+    'Triangles',
+    'Circles',
+    'Polygons',
+    'Coordinate geometry'
+  ],
 
-  // // --- BIOLOGY ---
-  // 'cell-biology': [
-  //   'Cell structure',
-  //   'Mitochondria',
-  //   'Nucleus',
-  //   'Cell membrane',
-  //   'Cell cycle'
-  // ],
+  // --- BIOLOGY ---
+  'cell-biology': [
+    'Cell structure',
+    'Mitochondria',
+    'Nucleus',
+    'Cell membrane',
+    'Cell cycle'
+  ],
 
-  // 'genetics': [
-  //   'DNA',
-  //   'RNA',
-  //   'Gene expression',
-  //   'Mutation',
-  //   'Genetic inheritance'
-  // ],
+  'genetics': [
+    'DNA',
+    'RNA',
+    'Gene expression',
+    'Mutation',
+    'Genetic inheritance'
+  ],
 
-  // 'evolution': [
-  //   'Natural selection',
-  //   'Darwin\'s theory',
-  //   'Speciation',
-  //   'Adaptation'
-  // ],
+  'evolution': [
+    'Natural selection',
+    'Darwin\'s theory',
+    'Speciation',
+    'Adaptation'
+  ],
 
-  // 'microbiology': [
-  //   'Virus',
-  //   'Bacteria',
-  //   'Fungi',
-  //   'Microbial infection'
-  // ],
+  'microbiology': [
+    'Virus',
+    'Bacteria',
+    'Fungi',
+    'Microbial infection'
+  ],
 
-  // // --- CHEMISTRY ---
-  // 'organic-chemistry': [
-  //   'Hydrocarbon',
-  //   'Functional group',
-  //   'Alcohols',
-  //   'Amines',
-  //   'Carboxylic acids'
-  // ],
+  // --- CHEMISTRY ---
+  'organic-chemistry': [
+    'Hydrocarbon',
+    'Functional group',
+    'Alcohols',
+    'Amines',
+    'Carboxylic acids'
+  ],
 
-  // 'inorganic-chemistry': [
-  //   'Metals',
-  //   'Ionic bond',
-  //   'Coordination compound',
-  //   'Transition metals'
-  // ],
+  'inorganic-chemistry': [
+    'Metals',
+    'Ionic bond',
+    'Coordination compound',
+    'Transition metals'
+  ],
 
-  // 'chemical-reactions': [
-  //   'Oxidation',
-  //   'Reduction',
-  //   'Reaction rate',
-  //   'Stoichiometry'
-  // ],
+  'chemical-reactions': [
+    'Oxidation',
+    'Reduction',
+    'Reaction rate',
+    'Stoichiometry'
+  ],
 
-  // 'periodic-table': [
-  //   'Elements',
-  //   'Atomic number',
-  //   'Groups',
-  //   'Periods'
-  // ],
+  'periodic-table': [
+    'Elements',
+    'Atomic number',
+    'Groups',
+    'Periods'
+  ],
 
-  // // --- SPACE ---
-  // 'solar-system': [
-  //   'Sun',
-  //   'Earth',
-  //   'Mars',
-  //   'Jupiter',
-  //   'Moon',
-  //   'Asteroids'
-  // ],
+  // --- SPACE ---
+  'solar-system': [
+    'Sun',
+    'Earth',
+    'Mars',
+    'Jupiter',
+    'Moon',
+    'Asteroids'
+  ],
 
-  // 'galaxies': [
-  //   'Milky Way',
-  //   'Andromeda',
-  //   'Spiral galaxy',
-  //   'Elliptical galaxy',
-  //   'Galaxy clusters'
-  // ],
+  'galaxies': [
+    'Milky Way',
+    'Andromeda',
+    'Spiral galaxy',
+    'Elliptical galaxy',
+    'Galaxy clusters'
+  ],
 
-  // 'cosmology': [
-  //   'Big Bang',
-  //   'Dark matter',
-  //   'Dark energy',
-  //   'Cosmic microwave background'
-  // ],
+  'cosmology': [
+    'Big Bang',
+    'Dark matter',
+    'Dark energy',
+    'Cosmic microwave background'
+  ],
 
-  // 'space-exploration': [
-  //   'NASA',
-  //   'SpaceX',
-  //   'International Space Station',
-  //   'Apollo program'
-  // ],
+  'space-exploration': [
+    'NASA',
+    'SpaceX',
+    'International Space Station',
+    'Apollo program'
+  ],
 
-  // // --- HISTORY ---
-  // 'world-war-1': [
-  //   'World War I',
-  //   'Allied powers',
-  //   'Central powers',
-  //   'Trench warfare'
-  // ],
+  // --- HISTORY ---
+  'world-war-1': [
+    'World War I',
+    'Allied powers',
+    'Central powers',
+    'Trench warfare'
+  ],
 
-  // 'world-war-2': [
-  //   'World War II',
-  //   'Axis powers',
-  //   'Allied forces',
-  //   'Holocaust'
-  // ],
+  'world-war-2': [
+    'World War II',
+    'Axis powers',
+    'Allied forces',
+    'Holocaust'
+  ],
 
-  // 'roman-empire': [
-  //   'Roman Empire',
-  //   'Julius Caesar',
-  //   'Roman senate',
-  //   'Gladiator games'
-  // ],
+  'roman-empire': [
+    'Roman Empire',
+    'Julius Caesar',
+    'Roman senate',
+    'Gladiator games'
+  ],
 
-  // 'mughal-empire': [
-  //   'Mughal Empire',
-  //   'Akbar',
-  //   'Shah Jahan',
-  //   'Taj Mahal'
-  // ],
+  'mughal-empire': [
+    'Mughal Empire',
+    'Akbar',
+    'Shah Jahan',
+    'Taj Mahal'
+  ],
 
-  // 'industrial-revolution': [
-  //   'Industrial Revolution',
-  //   'Steam engine',
-  //   'Factories',
-  //   'Urbanization'
-  // ],
+  'industrial-revolution': [
+    'Industrial Revolution',
+    'Steam engine',
+    'Factories',
+    'Urbanization'
+  ],
 
-  // 'american-revolution': [
-  //   'American Revolution',
-  //   'Declaration of Independence',
-  //   'George Washington'
-  // ]
+  'american-revolution': [
+    'American Revolution',
+    'Declaration of Independence',
+    'George Washington'
+  ]
 };
 
 
 const DIFFICULTY_MAP = {
   'quantum-physics': 'advanced',
   'relativity': 'advanced',
-  // 'thermodynamics': 'advanced',
-  // 'electromagnetism': 'advanced',
-  // 'particle-physics': 'advanced',
-  // 'nuclear-physics': 'advanced',
-  // 'classical-mechanics': 'intermediate',
-  // 'astrophysics': 'advanced',
+  'thermodynamics': 'advanced',
+  'electromagnetism': 'advanced',
+  'particle-physics': 'advanced',
+  'nuclear-physics': 'advanced',
+  'classical-mechanics': 'intermediate',
+  'astrophysics': 'advanced',
 
-  // 'machine-learning': 'intermediate',
-  // 'deep-learning': 'advanced',
-  // 'nlp': 'intermediate',
-  // 'computer-vision': 'intermediate',
-  // 'reinforcement-learning': 'advanced',
+  'machine-learning': 'intermediate',
+  'deep-learning': 'advanced',
+  'nlp': 'intermediate',
+  'computer-vision': 'intermediate',
+  'reinforcement-learning': 'advanced',
 
-  // 'algorithms': 'intermediate',
-  // 'data-structures': 'intermediate',
-  // 'databases': 'intermediate',
-  // 'operating-systems': 'intermediate',
-  // 'computer-networks': 'intermediate',
-  // 'web-development': 'intermediate',
+  'algorithms': 'intermediate',
+  'data-structures': 'intermediate',
+  'databases': 'intermediate',
+  'operating-systems': 'intermediate',
+  'computer-networks': 'intermediate',
+  'web-development': 'intermediate',
 
-  // 'calculus': 'advanced',
-  // 'linear-algebra': 'advanced',
-  // 'probability-stats': 'intermediate',
-  // 'number-theory': 'advanced',
-  // 'geometry': 'beginner',
+  'calculus': 'advanced',
+  'linear-algebra': 'advanced',
+  'probability-stats': 'intermediate',
+  'number-theory': 'advanced',
+  'geometry': 'beginner',
 
-  // 'cell-biology': 'intermediate',
-  // 'genetics': 'intermediate',
-  // 'evolution': 'beginner',
-  // 'microbiology': 'intermediate',
+  'cell-biology': 'intermediate',
+  'genetics': 'intermediate',
+  'evolution': 'beginner',
+  'microbiology': 'intermediate',
 
-  // 'organic-chemistry': 'intermediate',
-  // 'inorganic-chemistry': 'intermediate',
-  // 'chemical-reactions': 'intermediate',
-  // 'periodic-table': 'beginner',
+  'organic-chemistry': 'intermediate',
+  'inorganic-chemistry': 'intermediate',
+  'chemical-reactions': 'intermediate',
+  'periodic-table': 'beginner',
 
-  // 'solar-system': 'beginner',
-  // 'galaxies': 'intermediate',
-  // 'cosmology': 'advanced',
-  // 'space-exploration': 'beginner',
+  'solar-system': 'beginner',
+  'galaxies': 'intermediate',
+  'cosmology': 'advanced',
+  'space-exploration': 'beginner',
 
-  // 'world-war-1': 'beginner',
-  // 'world-war-2': 'beginner',
-  // 'roman-empire': 'beginner',
-  // 'mughal-empire': 'beginner',
-  // 'industrial-revolution': 'beginner',
-  // 'american-revolution': 'beginner'
+  'world-war-1': 'beginner',
+  'world-war-2': 'beginner',
+  'roman-empire': 'beginner',
+  'mughal-empire': 'beginner',
+  'industrial-revolution': 'beginner',
+  'american-revolution': 'beginner'
 };
 
 
@@ -458,7 +458,7 @@ const ingest = async () => {
   console.log('📡 Connecting to services...');
   await meilisearch.initIndex();
   await qdrant.initCollection();
-  await memgraph.initGraph();
+  //await memgraph.initGraph();
   console.log('');
 
   const documents = [];
@@ -525,17 +525,9 @@ const ingest = async () => {
     }]);
   }
   console.log('   ✅ Done\n');
-
-  console.log('📤 Building graph in Memgraph...');
-  for (const doc of documents) {
-    await memgraph.addDocumentWithConcepts(doc);
-  }
-  console.log('   ✅ Done\n');
-
   console.log('🎉 Ingestion complete!');
   console.log(`   📚 ${documents.length} documents indexed`);
-  
-  await memgraph.close();
+
   process.exit(0);
 };
 
