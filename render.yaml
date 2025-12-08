@@ -6,7 +6,7 @@ services:
     region: oregon
     plan: free
     envVars:
-      PORT: "10000"
+      PORT: "${PORT}"
 
       MEILI_HOST: "https://ms-d74b28e2edf3-36059.fra.meilisearch.io"
       MEILI_API_KEY: "${MEILI_API_KEY}"
@@ -15,7 +15,6 @@ services:
       QDRANT_API_KEY: "${QDRANT_API_KEY}"
 
       GROQ_API_KEY: "${GROQ_API_KEY}"
-
     autoDeploy: true
 
   - name: hivemind-frontend
@@ -24,8 +23,6 @@ services:
     dockerfilePath: frontend/Dockerfile
     plan: free
     region: oregon
-
     envVars:
-      VITE_API_URL: "${hivemind-backend.url}"
-
+      VITE_API_URL: "https://${hivemind-backend.host}"
     autoDeploy: true
