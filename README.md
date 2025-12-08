@@ -1,27 +1,27 @@
-# 🐝 Hivemind
+# HIVEMIND
 
 > **Knowledge Constellation Platform** - Transform any topic into a visual learning journey
 
 [![Node.js](https://img.shields.io/badge/Node.js-18+-green.svg)](https://nodejs.org/)
 [![React](https://img.shields.io/badge/React-18+-blue.svg)](https://reactjs.org/)
 
-
-## 🎯 The Problem
+## The Problem
 
 - **Information Overload**: Google returns 10 blue links, YouTube suggests random videos
 - **No Learning Path**: Learners don't know what to study first
 - **No Connections**: Concepts are learned in isolation
 
-## ✨ Our Solution
+## Our Solution
 
 Hivemind transforms any topic into a **visual knowledge constellation** that shows:
-- 📊 **10+ connected nodes** per search
-- 🎯 **Learning order** (1 → 2 → 3 → ...)
-- 🟢🟡🔴 **Difficulty levels** (Beginner → Intermediate → Advanced)
-- 🤖 **Context-aware AI chat**
-- 🎤 **Multilingual voice support** (12+ languages)
 
-## 🛠️ Tech Stack
+- **10+ connected nodes** per search
+- **Learning order** (1 → 2 → 3 → ...)
+- **Difficulty levels** (Beginner → Intermediate → Advanced)
+- **Context-aware AI chat**
+- **Multilingual voice support** (12+ languages)
+
+## Tech Stack
 
 ### Frontend
 | Technology | Purpose |
@@ -35,7 +35,7 @@ Hivemind transforms any topic into a **visual knowledge constellation** that sho
 | Technology | Purpose |
 |------------|---------|
 | Node.js + Express | REST API server |
-| Groq API | LLM inference (Llama 3.1) |
+| Groq API (Llama 3.1) | LLM inference |
 | Wikipedia API | Knowledge source |
 
 ### Databases
@@ -43,9 +43,8 @@ Hivemind transforms any topic into a **visual knowledge constellation** that sho
 |------------|---------|
 | Meilisearch | Full-text search |
 | Qdrant | Vector embeddings |
-| Memgraph | Knowledge graph |
 
-## 🚀 Quick Start
+## Quick Start
 
 ### Prerequisites
 - Node.js 18+
@@ -75,11 +74,6 @@ QDRANT_API_KEY=your_qdrant_key
 
 # Groq
 GROQ_API_KEY=your_groq_key
-
-# Memgraph
-MEMGRAPH_URI=your_memgraph_uri
-MEMGRAPH_USERNAME=your_username
-MEMGRAPH_PASSWORD=your_password
 ```
 
 ### 3. Ingest Data
@@ -102,14 +96,12 @@ npm run dev
 ```
 App runs on `http://localhost:5173`
 
-
-## 🔌 API Endpoints
+## API Endpoints
 
 | Method | Endpoint | Description |
 |--------|----------|-------------|
 | GET | `/health` | Health check |
 | GET | `/search?q=query` | Search documents |
-| GET | `/graph?concept=name` | Get concept graph |
 | POST | `/chat` | Send chat message |
 
 ### Example: Search
@@ -124,28 +116,25 @@ curl -X POST "http://localhost:3000/chat" \
   -d '{"message": "Explain quantum entanglement"}'
 ```
 
-## 🎨 Features
+## Features
 
-### 🌐 Knowledge Constellation
+### Knowledge Constellation
 - Interactive graph visualization
 - Numbered nodes showing learning order
 - Color-coded difficulty levels
 - Hover for details, click for full info
 
-### 🤖 AI Chat
-- Context-aware responses
+### AI Chat
+- Context-aware responses using Llama 3.1
 - Only answers from loaded articles
 - Prevents off-topic hallucinations
 
-### 🎤 Multilingual Voice
+### Multilingual Voice
 - Speech-to-text input
 - Text-to-speech output
-- 12+ languages supported:
-  - English, Hindi, Spanish, French
-  - German, Chinese, Japanese, Korean
-  - Arabic, Portuguese, Russian, Italian
+- 12+ languages: English, Hindi, Spanish, French, German, Chinese, Japanese, Korean, Arabic, Portuguese, Russian, Italian
 
-## 📊 Knowledge Categories
+## Knowledge Categories
 
 | Category | Topics |
 |----------|--------|
@@ -158,7 +147,7 @@ curl -X POST "http://localhost:3000/chat" \
 | Chemistry | Organic chemistry, Biochemistry |
 | Space | Solar system, Black holes, Big Bang |
 
-## 🚀 Deployment
+## Deployment
 
 ### Backend (Railway)
 1. Connect GitHub repo
@@ -170,17 +159,17 @@ curl -X POST "http://localhost:3000/chat" \
 2. Update `API_URL` in `src/services/api.js`
 3. Deploy automatically
 
-## 🗺️ Roadmap
+## Roadmap
 
 | Phase | Features |
 |-------|----------|
-| ✅ MVP | Constellation, AI chat, Voice |
+| MVP | Constellation, AI chat, Voice |
 | Q1 2025 | User accounts, Save paths |
 | Q2 2025 | Upload PDFs, YouTube integration |
 | Q3 2025 | Quiz generation, Flashcards |
 | Q4 2025 | Enterprise API, White-label |
 
-## 🤝 Contributing
+## Contributing
 
 1. Fork the repository
 2. Create feature branch (`git checkout -b feature/amazing`)
@@ -188,11 +177,11 @@ curl -X POST "http://localhost:3000/chat" \
 4. Push to branch (`git push origin feature/amazing`)
 5. Open a Pull Request
 
-## 👩‍💻 Team
+## Team
 
 **Team EclipseX**
 - Harpreet Kaur Gothra
 
 ---
 
-Built with ❤️ for **Open Innovation Hackathon '25**
+Built for **Open Innovation Hackathon '25**
