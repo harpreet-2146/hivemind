@@ -134,7 +134,7 @@ function Home() {
 
             {searchResults.length === 0 ? (
               <div className="h-full flex flex-col items-center justify-center px-6 text-center">
-                <div className="text-lg font-semibold text-slate-200 mb-2">Search to begin exploring ideas</div>
+                {/* <div className="text-lg font-semibold text-slate-200 mb-2">Search to begin exploring ideas</div>
                 <div className="text-sm text-slate-400 max-w-xl">
                   Try queries like <span className="text-indigo-200 font-medium">"machine learning"</span>, <span className="text-indigo-200 font-medium">"quantum entanglement"</span>, or <span className="text-indigo-200 font-medium">"calculus"</span>.
                 </div>
@@ -143,7 +143,86 @@ function Home() {
                   <div className="px-3 py-1 rounded-full bg-white/5 text-xs">Concept Map</div>
                   <div className="px-3 py-1 rounded-full bg-white/5 text-xs">AI Chat</div>
                   <div className="px-3 py-1 rounded-full bg-white/5 text-xs">Snippets</div>
-                </div>
+                </div> */}
+                
+<div className="mt-6 flex gap-3">
+  <div className="px-3 py-1 rounded-full bg-white/5 text-xs">Concept Map</div>
+  <div className="px-3 py-1 rounded-full bg-white/5 text-xs">AI Chat</div>
+  <div className="px-3 py-1 rounded-full bg-white/5 text-xs">Snippets</div>
+</div>
+<div className="text-2xl text-slate-400 max-w-xl">
+  SEARCH THESE TOPICS IN THE SEARCH BAR
+</div>
+
+{/* <div className="mt-6 flex gap-3">
+  <div className="px-3 py-1 rounded-full bg-white/5 text-xs">Concept Map</div>
+  <div className="px-3 py-1 rounded-full bg-white/5 text-xs">AI Chat</div>
+  <div className="px-3 py-1 rounded-full bg-white/5 text-xs">Snippets</div>
+</div> */}
+
+{/* --- TOPIC GRID --- */}
+<div className="mt-8 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 text-sm">
+  {[
+    "Quantum Physics",
+    "Relativity",
+    "Thermodynamics",
+    "Electromagnetism",
+    "Particle Physics",
+    "Nuclear Physics",
+    "Classical Mechanics",
+    "Astrophysics",
+
+    "Machine Learning",
+    "Deep Learning",
+    "NLP",
+    "Computer Vision",
+    "Reinforcement Learning",
+
+    "Algorithms",
+    "Data Structures",
+    "Databases",
+    "Operating Systems",
+    "Computer Networks",
+    "Web Development",
+
+    "Calculus",
+    "Linear Algebra",
+    "Probability & Statistics",
+    "Number Theory",
+    "Geometry",
+
+    "Cell Biology",
+    "Genetics",
+    "Evolution",
+    "Microbiology",
+
+    "Organic Chemistry",
+    "Inorganic Chemistry",
+    "Chemical Reactions",
+    "Periodic Table",
+
+    "Solar System",
+    "Galaxies",
+    "Cosmology",
+    "Space Exploration",
+
+    "World War I",
+    "World War II",
+    "Roman Empire",
+    "Mughal Empire",
+    "Industrial Revolution",
+    "American Revolution",
+  ].map(topic => (
+    <div
+      key={topic}
+      className="px-3 py-2 rounded-md bg-white/5 hover:bg-white/10 
+                 transition cursor-pointer text-slate-300"
+    >
+      {topic}
+    </div>
+  ))}
+</div>
+
               </div>
             ) : (
               <div className="h-full">
