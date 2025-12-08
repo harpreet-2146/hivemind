@@ -3,7 +3,7 @@ const express = require('express');
 const cors = require('cors');
 const meilisearch = require('./services/meilisearch');
 const qdrant = require('./services/qdrant');
-const memgraph = require('./services/memgraph');
+//const memgraph = require('./services/memgraph');
 const gemini = require('./services/gemini');
 
 const app = express();
@@ -27,217 +27,217 @@ const CATEGORY_KEYWORDS = {
     'relativity', 'einstein', 'spacetime', 'time dilation',
     'general relativity', 'special relativity', 'gravity curvature',
     'lorentz', 'mass energy', 'gravitational waves'
+  ],
+
+  'thermodynamics': [
+    'thermodynamics', 'entropy', 'enthalpy', 'heat', 'temperature',
+    'thermal equilibrium', 'carnot cycle'
+  ],
+
+  'electromagnetism': [
+    'electromagnetism', 'electric field', 'magnetic field',
+    'maxwell equations', 'lorentz force', 'electrodynamics'
+  ],
+
+  'particle-physics': [
+    'particle physics', 'boson', 'fermion', 'quark', 'lepton',
+    'standard model', 'higgs boson', 'neutrino'
+  ],
+
+  'nuclear-physics': [
+    'nuclear physics', 'radioactive', 'isotope', 'nuclear fission',
+    'nuclear fusion', 'binding energy'
+  ],
+
+  'classical-mechanics': [
+    'mechanics', 'newton laws', 'force', 'motion',
+    'kinematics', 'dynamics', 'momentum'
+  ],
+
+  'astrophysics': [
+    'astrophysics', 'supernova', 'neutron star', 'pulsar',
+    'exoplanet', 'accretion disk', 'cosmic'
+  ],
+
+  // --- AI + MACHINE LEARNING ---
+  'machine-learning': [
+    'machine learning', 'supervised', 'unsupervised', 'reinforcement',
+    'gradient descent', 'loss function', 'model training',
+    'overfitting', 'regularization', 'evaluation metrics'
+  ],
+
+  'deep-learning': [
+    'deep learning', 'neural network', 'cnn', 'rnn', 'transformer',
+    'attention mechanism', 'backpropagation', 'activation function',
+    'batch norm', 'dropout', 'autoencoder', 'gan'
+  ],
+
+  'nlp': [
+    'nlp', 'natural language', 'large language model', 'llm',
+    'tokenization', 'semantic similarity', 'text processing',
+    'embedding', 'classification', 'sentiment analysis'
+  ],
+
+  'computer-vision': [
+    'computer vision', 'opencv', 'image classification',
+    'object detection', 'segmentation', 'pose estimation'
+  ],
+
+  'reinforcement-learning': [
+    'reinforcement learning', 'rl', 'reward', 'policy', 'q learning',
+    'mdp', 'value iteration'
+  ],
+
+  // --- COMPUTER SCIENCE ---
+  'algorithms': [
+    'algorithm', 'sorting', 'searching', 'graph algorithm',
+    'dynamic programming', 'complexity', 'big o'
+  ],
+
+  'data-structures': [
+    'data structure', 'tree', 'graph', 'linked list',
+    'stack', 'queue', 'hash table'
+  ],
+
+  'databases': [
+    'database', 'sql', 'nosql', 'mongodb',
+    'query', 'indexing', 'schema'
+  ],
+
+  'operating-systems': [
+    'operating system', 'process', 'thread',
+    'scheduling', 'memory management', 'interrupt'
+  ],
+
+  'computer-networks': [
+    'network', 'protocol', 'ip', 'tcp', 'routing',
+    'http', 'packet switching'
+  ],
+
+  'web-development': [
+    'web dev', 'frontend', 'backend',
+    'javascript', 'react', 'node', 'api', 'full stack'
+  ],
+
+  // --- MATHEMATICS ---
+  'calculus': [
+    'calculus', 'derivative', 'integral', 'limit',
+    'rate of change', 'multivariable'
+  ],
+
+  'linear-algebra': [
+    'linear algebra', 'matrix', 'vector',
+    'eigenvalue', 'eigenvector', 'linear transformation'
+  ],
+
+  'probability-stats': [
+    'probability', 'statistics', 'bayes theorem',
+    'distribution', 'variance', 'hypothesis testing'
+  ],
+
+  'number-theory': [
+    'number theory', 'prime', 'modular arithmetic', 'gcd',
+    'diophantine'
+  ],
+
+  'geometry': [
+    'geometry', 'circle', 'triangle',
+    'polygon', 'coordinate geometry'
+  ],
+
+  // --- BIOLOGY ---
+  'cell-biology': [
+    'cell', 'organelle', 'mitochondria', 'nucleus',
+    'cell membrane', 'cell cycle'
+  ],
+
+  'genetics': [
+    'genetics', 'gene', 'dna', 'rna',
+    'mutation', 'inheritance'
+  ],
+
+  'evolution': [
+    'evolution', 'darwin', 'natural selection',
+    'adaptation', 'speciation'
+  ],
+
+  'microbiology': [
+    'microbiology', 'virus', 'bacteria',
+    'fungi', 'infection'
+  ],
+
+  // --- CHEMISTRY ---
+  'organic-chemistry': [
+    'organic chemistry', 'hydrocarbon',
+    'functional group', 'alcohol', 'amine', 'carboxyl'
+  ],
+
+  'inorganic-chemistry': [
+    'inorganic chemistry', 'metal', 'ionic bond',
+    'coordination compound', 'transition metal'
+  ],
+
+  'chemical-reactions': [
+    'chemical reaction', 'oxidation', 'reduction',
+    'reaction rate', 'stoichiometry'
+  ],
+
+  'periodic-table': [
+    'periodic table', 'element', 'atomic number',
+    'group', 'period', 'electron configuration'
+  ],
+
+  // --- SPACE ---
+  'solar-system': [
+    'solar system', 'planet', 'sun', 'orbit',
+    'moon', 'asteroid'
+  ],
+
+  'galaxies': [
+    'galaxy', 'milky way', 'andromeda',
+    'spiral galaxy', 'elliptical galaxy'
+  ],
+
+  'cosmology': [
+    'cosmology', 'big bang', 'dark matter',
+    'dark energy', 'cmb', 'expansion'
+  ],
+
+  'space-exploration': [
+    'space exploration', 'nasa', 'spacex',
+    'iss', 'apollo', 'rocket launch'
+  ],
+
+  // --- HISTORY ---
+  'world-war-1': [
+    'world war 1', 'ww1', 'allies', 'central powers',
+    'trench warfare', 'armistice'
+  ],
+
+  'world-war-2': [
+    'world war 2', 'ww2', 'axis', 'allies',
+    'hitler', 'holocaust'
+  ],
+
+  'roman-empire': [
+    'roman empire', 'rome', 'caesar',
+    'senate', 'roman army'
+  ],
+
+  'mughal-empire': [
+    'mughal empire', 'akbar', 'shah jahan',
+    'taj mahal', 'aurangzeb'
+  ],
+
+  'industrial-revolution': [
+    'industrial revolution', 'factories',
+    'steam engine', 'innovation', 'urbanization'
+  ],
+
+  'american-revolution': [
+    'american revolution', 'independence',
+    'colonies', 'george washington', 'british'
   ]
-
-  // 'thermodynamics': [
-  //   'thermodynamics', 'entropy', 'enthalpy', 'heat', 'temperature',
-  //   'thermal equilibrium', 'carnot cycle'
-  // ],
-
-  // 'electromagnetism': [
-  //   'electromagnetism', 'electric field', 'magnetic field',
-  //   'maxwell equations', 'lorentz force', 'electrodynamics'
-  // ],
-
-  // 'particle-physics': [
-  //   'particle physics', 'boson', 'fermion', 'quark', 'lepton',
-  //   'standard model', 'higgs boson', 'neutrino'
-  // ],
-
-  // 'nuclear-physics': [
-  //   'nuclear physics', 'radioactive', 'isotope', 'nuclear fission',
-  //   'nuclear fusion', 'binding energy'
-  // ],
-
-  // 'classical-mechanics': [
-  //   'mechanics', 'newton laws', 'force', 'motion',
-  //   'kinematics', 'dynamics', 'momentum'
-  // ],
-
-  // 'astrophysics': [
-  //   'astrophysics', 'supernova', 'neutron star', 'pulsar',
-  //   'exoplanet', 'accretion disk', 'cosmic'
-  // ],
-
-  // // --- AI + MACHINE LEARNING ---
-  // 'machine-learning': [
-  //   'machine learning', 'supervised', 'unsupervised', 'reinforcement',
-  //   'gradient descent', 'loss function', 'model training',
-  //   'overfitting', 'regularization', 'evaluation metrics'
-  // ],
-
-  // 'deep-learning': [
-  //   'deep learning', 'neural network', 'cnn', 'rnn', 'transformer',
-  //   'attention mechanism', 'backpropagation', 'activation function',
-  //   'batch norm', 'dropout', 'autoencoder', 'gan'
-  // ],
-
-  // 'nlp': [
-  //   'nlp', 'natural language', 'large language model', 'llm',
-  //   'tokenization', 'semantic similarity', 'text processing',
-  //   'embedding', 'classification', 'sentiment analysis'
-  // ],
-
-  // 'computer-vision': [
-  //   'computer vision', 'opencv', 'image classification',
-  //   'object detection', 'segmentation', 'pose estimation'
-  // ],
-
-  // 'reinforcement-learning': [
-  //   'reinforcement learning', 'rl', 'reward', 'policy', 'q learning',
-  //   'mdp', 'value iteration'
-  // ],
-
-  // // --- COMPUTER SCIENCE ---
-  // 'algorithms': [
-  //   'algorithm', 'sorting', 'searching', 'graph algorithm',
-  //   'dynamic programming', 'complexity', 'big o'
-  // ],
-
-  // 'data-structures': [
-  //   'data structure', 'tree', 'graph', 'linked list',
-  //   'stack', 'queue', 'hash table'
-  // ],
-
-  // 'databases': [
-  //   'database', 'sql', 'nosql', 'mongodb',
-  //   'query', 'indexing', 'schema'
-  // ],
-
-  // 'operating-systems': [
-  //   'operating system', 'process', 'thread',
-  //   'scheduling', 'memory management', 'interrupt'
-  // ],
-
-  // 'computer-networks': [
-  //   'network', 'protocol', 'ip', 'tcp', 'routing',
-  //   'http', 'packet switching'
-  // ],
-
-  // 'web-development': [
-  //   'web dev', 'frontend', 'backend',
-  //   'javascript', 'react', 'node', 'api', 'full stack'
-  // ],
-
-  // // --- MATHEMATICS ---
-  // 'calculus': [
-  //   'calculus', 'derivative', 'integral', 'limit',
-  //   'rate of change', 'multivariable'
-  // ],
-
-  // 'linear-algebra': [
-  //   'linear algebra', 'matrix', 'vector',
-  //   'eigenvalue', 'eigenvector', 'linear transformation'
-  // ],
-
-  // 'probability-stats': [
-  //   'probability', 'statistics', 'bayes theorem',
-  //   'distribution', 'variance', 'hypothesis testing'
-  // ],
-
-  // 'number-theory': [
-  //   'number theory', 'prime', 'modular arithmetic', 'gcd',
-  //   'diophantine'
-  // ],
-
-  // 'geometry': [
-  //   'geometry', 'circle', 'triangle',
-  //   'polygon', 'coordinate geometry'
-  // ],
-
-  // // --- BIOLOGY ---
-  // 'cell-biology': [
-  //   'cell', 'organelle', 'mitochondria', 'nucleus',
-  //   'cell membrane', 'cell cycle'
-  // ],
-
-  // 'genetics': [
-  //   'genetics', 'gene', 'dna', 'rna',
-  //   'mutation', 'inheritance'
-  // ],
-
-  // 'evolution': [
-  //   'evolution', 'darwin', 'natural selection',
-  //   'adaptation', 'speciation'
-  // ],
-
-  // 'microbiology': [
-  //   'microbiology', 'virus', 'bacteria',
-  //   'fungi', 'infection'
-  // ],
-
-  // // --- CHEMISTRY ---
-  // 'organic-chemistry': [
-  //   'organic chemistry', 'hydrocarbon',
-  //   'functional group', 'alcohol', 'amine', 'carboxyl'
-  // ],
-
-  // 'inorganic-chemistry': [
-  //   'inorganic chemistry', 'metal', 'ionic bond',
-  //   'coordination compound', 'transition metal'
-  // ],
-
-  // 'chemical-reactions': [
-  //   'chemical reaction', 'oxidation', 'reduction',
-  //   'reaction rate', 'stoichiometry'
-  // ],
-
-  // 'periodic-table': [
-  //   'periodic table', 'element', 'atomic number',
-  //   'group', 'period', 'electron configuration'
-  // ],
-
-  // // --- SPACE ---
-  // 'solar-system': [
-  //   'solar system', 'planet', 'sun', 'orbit',
-  //   'moon', 'asteroid'
-  // ],
-
-  // 'galaxies': [
-  //   'galaxy', 'milky way', 'andromeda',
-  //   'spiral galaxy', 'elliptical galaxy'
-  // ],
-
-  // 'cosmology': [
-  //   'cosmology', 'big bang', 'dark matter',
-  //   'dark energy', 'cmb', 'expansion'
-  // ],
-
-  // 'space-exploration': [
-  //   'space exploration', 'nasa', 'spacex',
-  //   'iss', 'apollo', 'rocket launch'
-  // ],
-
-  // // --- HISTORY ---
-  // 'world-war-1': [
-  //   'world war 1', 'ww1', 'allies', 'central powers',
-  //   'trench warfare', 'armistice'
-  // ],
-
-  // 'world-war-2': [
-  //   'world war 2', 'ww2', 'axis', 'allies',
-  //   'hitler', 'holocaust'
-  // ],
-
-  // 'roman-empire': [
-  //   'roman empire', 'rome', 'caesar',
-  //   'senate', 'roman army'
-  // ],
-
-  // 'mughal-empire': [
-  //   'mughal empire', 'akbar', 'shah jahan',
-  //   'taj mahal', 'aurangzeb'
-  // ],
-
-  // 'industrial-revolution': [
-  //   'industrial revolution', 'factories',
-  //   'steam engine', 'innovation', 'urbanization'
-  // ],
-
-  // 'american-revolution': [
-  //   'american revolution', 'independence',
-  //   'colonies', 'george washington', 'british'
-  // ]
 };
 
 const getQueryCategory = (query) => {
@@ -335,24 +335,6 @@ app.get('/search', async (req, res) => {
   }
 });
 
-app.get('/graph', async (req, res) => {
-  try {
-    const { concept } = req.query;
-
-    let graph;
-    if (concept) {
-      graph = await memgraph.getConceptGraph(concept);
-    } else {
-      graph = await memgraph.getFullGraph(100);
-    }
-
-    res.json(graph);
-  } catch (error) {
-    console.error('Graph error:', error);
-    res.status(500).json({ error: error.message });
-  }
-});
-
 app.post('/chat', async (req, res) => {
   try {
     const { message } = req.body;
@@ -376,7 +358,6 @@ const PORT = process.env.PORT || 3000;
 const start = async () => {
   await meilisearch.initIndex();
   await qdrant.initCollection();
-  await memgraph.initGraph();
 
   app.listen(PORT, () => {
     console.log(`🚀 Hivemind API running on http://localhost:${PORT}`);
