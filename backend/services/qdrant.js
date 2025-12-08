@@ -3,10 +3,16 @@ const { QdrantClient } = require('@qdrant/js-client-rest');
 const client = new QdrantClient({
   url: process.env.QDRANT_URL,
   apiKey: process.env.QDRANT_API_KEY,
+
+  // REQUIRED for Qdrant Cloud (same issue as Meilisearch)
+  headers: {
+    Authorization: `Bearer ${process.env.QDRANT_API_KEY}`,
+    'Content-Type': 'application/json'
+  }
 });
 
 const COLLECTION_NAME = 'documents';
-const VECTOR_SIZE = 768; // Gemini embedding size
+const VECTOR_SIZE = 768;
 
 const initCollection = async () => {
   try {
@@ -17,8 +23,8 @@ const initCollection = async () => {
       await client.createCollection(COLLECTION_NAME, {
         vectors: {
           size: VECTOR_SIZE,
-          distance: 'Cosine',
-        },
+          distance: 'Cosine'
+        }
       });
       console.log('✅ Qdrant collection created');
     } else {
@@ -31,11 +37,10 @@ const initCollection = async () => {
 };
 
 const upsertDocuments = async (docs) => {
-  // docs should be array of { id, vector, payload }
   const points = docs.map(doc => ({
     id: doc.id,
     vector: doc.vector,
-    payload: doc.payload,
+    payload: doc.payload
   }));
 
   await client.upsert(COLLECTION_NAME, { points });
@@ -46,13 +51,13 @@ const searchSimilar = async (vector, limit = 10) => {
   const results = await client.search(COLLECTION_NAME, {
     vector,
     limit,
-    with_payload: true,
+    with_payload: true
   });
 
   return results.map(r => ({
     id: r.id,
     score: r.score,
-    ...r.payload,
+    ...r.payload
   }));
 };
 
@@ -60,5 +65,5 @@ module.exports = {
   client,
   initCollection,
   upsertDocuments,
-  searchSimilar,
+  searchSimilar
 };
