@@ -5,6 +5,9 @@
 [![Node.js](https://img.shields.io/badge/Node.js-18+-green.svg)](https://nodejs.org/)
 [![React](https://img.shields.io/badge/React-18+-blue.svg)](https://reactjs.org/)
 
+## LIVE LINK:
+ http://34.41.199.244
+
 ## The Problem
 
 - **Information Overload**: Google returns 10 blue links, YouTube suggests random videos
