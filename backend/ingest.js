@@ -33,7 +33,7 @@ const TOPICS_BY_CATEGORY = {
     'Gravitational waves',
     'Black hole relativity',
     'Relativistic mechanics'
-  ]
+  ],
 
   'thermodynamics': [
     'Laws of thermodynamics',
